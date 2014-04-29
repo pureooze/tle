@@ -3,8 +3,6 @@
 
 #include <QMap>
 #include <QString>
-#include <QPainter>
-#include <QGraphicsItem>
 #include <QDebug>
 
 class Room

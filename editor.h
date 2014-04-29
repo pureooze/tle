@@ -33,7 +33,7 @@ private:
     QMap<int, Room> *maps;
     Scene *scene;
     RoomGUI *guiRoom;
-    Room *datRoom;
+    Room *dataRoom;
     QString mode = "normal";
 
 protected:

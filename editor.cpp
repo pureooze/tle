@@ -15,6 +15,7 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
+    maps = new QMap<int, Room>;
 }
 
 editor::~editor()
@@ -57,8 +58,8 @@ editor::~editor()
 void editor::on_createRoom_clicked()
 {
     guiRoom = new RoomGUI();
-    datRoom = new Room();
-    maps->insertMulti(1, *datRoom);
+    dataRoom = new Room();
+    maps->insert(1, *dataRoom);
     scene->addItem(guiRoom);
 }
 
@@ -66,7 +67,7 @@ void editor::on_addExit_clicked()
 {
     QString portalName = "caveEntrance";
     int portalToRoom = 4;
-    qDebug() << maps;
+   // qDebug() << maps;
 //    maps[1].addPortal(portalName, portalToRoom);
 //    maps[1].displayPortals();
 }

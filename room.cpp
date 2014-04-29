@@ -2,10 +2,10 @@
 #include "QDebug"
 #include "QMap"
 #include "QString"
-#include "QPainter"
 
 Room::Room()
 {
+    qDebug() << "created";
 }
 
 // Function: Add a new portal to the QMap that contains
