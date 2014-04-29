@@ -16,7 +16,7 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
-    maps = new QMap<int, QString>;
+    maps = new QMap<QString, Room *>;
 }
 
 editor::~editor()
@@ -60,16 +60,17 @@ void editor::on_createRoom_clicked()
 {
     guiRoom = new RoomGUI();
     dataRoom = new Room();
-    maps->insert(1, "asd");
+    maps->insert("1", dataRoom);
+    dataRoom->addPortal("dave", 2);
     scene->addItem(guiRoom);
-    qDebug() << maps[1];
+    Room *test = maps->value(0);
 }
 
 void editor::on_addExit_clicked()
 {
     QString portalName = "caveEntrance";
     int portalToRoom = 4;
-    qDebug() << maps;
+    //qDebug() << maps;
 }
 
 void editor::on_removeExit_clicked()
@@ -91,11 +92,12 @@ void editor::sceneClicked()
     if(mode == "deleteRoom"){
         qDebug() << "Mode is" << mode;
 
-        /* Get the point in the global scope and translate it to the
-        *  scene's scope. This allows us to easily delete objects
-        *  without having to manually translate. Particularly useful
-        *  when the origin on the scene has been moved.
-        */
+        /*
+         * Get the point in the global scope and translate it to the
+         *  scene's scope. This allows us to easily delete objects
+         *  without having to manually translate. Particularly useful
+         *  when the origin on the scene has been moved.
+         */
         QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
         QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
         scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
