@@ -26,7 +26,7 @@ private slots:
     void on_createRoom_clicked();
     void on_removeExit_clicked();
     void on_deleteRoom_clicked();
-    //void removeRoom();
+    void removeRoom();
 
 private:
     Ui::editor *ui;
