@@ -2,8 +2,8 @@
 #define EDITOR_H
 
 #include "room.h"
-#include "scene.h"
 #include "roomgui.h"
+#include "scene.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QtCore>

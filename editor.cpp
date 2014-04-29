@@ -61,15 +61,14 @@ void editor::on_createRoom_clicked()
     dataRoom = new Room();
     maps->insert(1, *dataRoom);
     scene->addItem(guiRoom);
+    qDebug() << maps->values();
 }
 
 void editor::on_addExit_clicked()
 {
     QString portalName = "caveEntrance";
     int portalToRoom = 4;
-   // qDebug() << maps;
-//    maps[1].addPortal(portalName, portalToRoom);
-//    maps[1].displayPortals();
+    qDebug() << maps;
 }
 
 void editor::on_removeExit_clicked()
