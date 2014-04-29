@@ -30,7 +30,7 @@ private slots:
 
 private:
     Ui::editor *ui;
-    QMap<int, Room> *maps;
+    QMap<int, QString> *maps;
     Scene *scene;
     RoomGUI *guiRoom;
     Room *dataRoom;

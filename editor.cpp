@@ -4,6 +4,7 @@
 #include "roomgui.h"
 #include "scene.h"
 #include "QDebug"
+#include <QMap>
 
 editor::editor(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +16,7 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
-    maps = new QMap<int, Room>;
+    maps = new QMap<int, QString>;
 }
 
 editor::~editor()
@@ -59,9 +60,9 @@ void editor::on_createRoom_clicked()
 {
     guiRoom = new RoomGUI();
     dataRoom = new Room();
-    maps->insert(1, *dataRoom);
+    maps->insert(1, "asd");
     scene->addItem(guiRoom);
-    qDebug() << maps->values();
+    qDebug() << maps[1];
 }
 
 void editor::on_addExit_clicked()
