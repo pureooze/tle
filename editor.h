@@ -5,6 +5,7 @@
 #include "roomgui.h"
 #include "scene.h"
 #include "prompterAddExit.h"
+#include "prompterRemoveExit.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QGraphicsScene>
@@ -35,14 +36,16 @@ private:
     Room *dataRoom;
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
-    prompterAddExit *promptWindow;
+    prompterAddExit *promptAddExitWindow;
+    prompterRemoveExit *promptRemoveExitWindow;
 
 protected:
     //void paintEvent(QPaintEvent *e);
 
 public slots:
     void sceneClicked();
-    void dialogAddExitConfirmed(QString roomName, QString exitName, QString target);
+    void dialogAddExitConfirmed(QString roomName, QString portalName, QString target);
+    void dialogRemoveExitConfirmed(QString roomName, QString portalName);
 };
 
 #endif // EDITOR_H
