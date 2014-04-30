@@ -4,7 +4,7 @@
 #include "roomgui.h"
 #include "scene.h"
 #include "QDebug"
-#include <QMap>
+#include <QList>
 
 editor::editor(QWidget *parent) :
     QMainWindow(parent),
@@ -16,7 +16,7 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
-    maps = new QMap<QString, Room *>;
+    rooms = QMap<QString, Room *>;
 }
 
 editor::~editor()
@@ -58,18 +58,18 @@ editor::~editor()
 
 void editor::on_createRoom_clicked()
 {
-    guiRoom = new RoomGUI();
     dataRoom = new Room();
-    maps->insert("1", dataRoom);
-    dataRoom->addPortal("dave", 2);
+    rooms->insert("Forest", dataRoom);
+
+    guiRoom = new RoomGUI();
     scene->addItem(guiRoom);
-    Room *test = maps->value(0);
 }
 
 void editor::on_addExit_clicked()
 {
     QString portalName = "caveEntrance";
     int portalToRoom = 4;
+    dataRoom->addPortal("cave", 2);
     //qDebug() << maps;
 }
 
@@ -81,8 +81,8 @@ void editor::on_removeExit_clicked()
 
 void editor::on_deleteRoom_clicked()
 {
-    qDebug() << scene->items();
-    qDebug() << scene->itemAt(this->mapFromGlobal(QCursor::pos()), QTransform());
+    //qDebug() << scene->items();
+    //qDebug() << scene->itemAt(this->mapFromGlobal(QCursor::pos()), QTransform());
     mode = "deleteRoom";
 }
 
@@ -90,7 +90,7 @@ void editor::sceneClicked()
 {
     // Determine what should be done on mouse click, depending on the mode
     if(mode == "deleteRoom"){
-        qDebug() << "Mode is" << mode;
+        //qDebug() << "Mode is" << mode;
 
         /*
          * Get the point in the global scope and translate it to the

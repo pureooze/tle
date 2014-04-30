@@ -30,10 +30,10 @@ private slots:
 
 private:
     Ui::editor *ui;
-    QMap<QString, Room *> *maps;
     Scene *scene;
     RoomGUI *guiRoom;
     Room *dataRoom;
+    QMap<QString, Room *> *rooms;
     QString mode = "normal";
 
 protected:

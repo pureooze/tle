@@ -27,5 +27,5 @@ void Room::removePortal(QString name)
 
 void Room::displayPortals()
 {
-    qDebug() << portals["h"];
+    qDebug() << portals;
 }
