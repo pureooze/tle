@@ -1,5 +1,7 @@
 #include "prompterRemoveExit.h"
 #include "ui_prompterRemoveExit.h"
+#include "room.h"
+#include <QMap>
 
 prompterRemoveExit::prompterRemoveExit(QWidget *parent) :
     QDialog(parent),
@@ -13,18 +15,26 @@ prompterRemoveExit::~prompterRemoveExit()
     delete ui;
 }
 
-void prompterRemoveExit::setMap(QMap<QString, Room *> *map)
+void prompterRemoveExit::setMap(QMap<QString, Room *> *rooms)
 {
-    for(auto i : map->keys()){
+    for(auto i : rooms->keys()){
         ui->targetComboBox->addItem(i);
     }
 
-    this->map = map;
-    this->portals = this->map->value(ui->targetComboBox->currentText())->getPortals();
+    this->portals = (*rooms).value(ui->targetComboBox->currentText())->getPortals();
+    data = new QMap<QString, Room *>;
 
-    for(auto i : portals.keys()){
-        ui->portalComboBox->addItem(i);
+    for(auto i : rooms->keys()){
+        data->insert(i, rooms->value(i));
+        qDebug() << data->values();
     }
+//    for(auto i : portals.keys()){
+//        ui->portalComboBox->addItem(i);
+//        QString bob = portals.value(i);
+//        qDebug() << i << bob;
+//        data->insert(i, bob);
+//        qDebug() << data->values();
+//    }
 }
 
 void prompterRemoveExit::on_cancelButton_clicked()
@@ -44,12 +54,9 @@ void prompterRemoveExit::on_okButton_clicked()
     this->close();
 }
 
-void prompterRemoveExit::on_targetComboBox_currentIndexChanged(const QString &arg1)
+
+
+void prompterRemoveExit::on_targetComboBox_currentIndexChanged(int index)
 {
-    ui->portalComboBox->clear();
-    qDebug() << this->map->value(ui->targetComboBox->currentText());
-//    this->portals = this->map->value(ui->targetComboBox->currentText())->getPortals();
-//    for(auto i : portals.keys()){
-//        ui->portalComboBox->addItem(i);
-//    }
+    qDebug() << index;
 }

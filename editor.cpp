@@ -49,9 +49,12 @@ void editor::on_removeExit_clicked()
 {
     promptRemoveExitWindow = new prompterRemoveExit;
     promptRemoveExitWindow->setModal(true);
+    //promptRemoveExitWindow->setMap(rooms);
     connect(promptRemoveExitWindow, SIGNAL(removeExit(QString,QString)), this,\
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
-    promptRemoveExitWindow->setMap(rooms);
+    connect(this, SIGNAL(setRoomMap(QMap<QString,Room*>)), promptRemoveExitWindow,\
+            SLOT(setMap(QMap<QString,Room*>));
+    emit setRoomMap(rooms);
     promptRemoveExitWindow->exec();
 }
 

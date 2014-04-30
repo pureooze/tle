@@ -17,17 +17,16 @@ public:
     explicit prompterRemoveExit(QWidget *parent = 0);
     ~prompterRemoveExit();
 
-    void setMap(QMap<QString, Room *> *map);
-
 private slots:
     void on_cancelButton_clicked();
     void on_okButton_clicked();
+    void on_targetComboBox_currentIndexChanged(int index);
 
-    void on_targetComboBox_currentIndexChanged(const QString &arg1);
+    void setMap(QMap<QString, Room *>);
 
 private:
     Ui::prompterRemoveExit *ui;
-    QMap<QString, Room *> *map;
+    QMap<QString, Room *> *data;
     QMap<QString, QString> portals;
 
 signals:

@@ -49,6 +49,9 @@ public slots:
     void dialogCreateRoomConfirmed(QString roomName);
     void dialogAddExitConfirmed(QString roomName, QString portalName, QString target);
     void dialogRemoveExitConfirmed(QString roomName, QString portalName);
+
+signals:
+    void setRoomMap();
 };
 
 #endif // EDITOR_H
