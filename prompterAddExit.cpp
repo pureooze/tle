@@ -17,6 +17,7 @@ prompterAddExit::~prompterAddExit()
 void prompterAddExit::on_okButton_clicked()
 {
     qDebug() << "prompterAddExit has submitted";
+
     QString roomName = ui->addToComboBox->currentText();
     roomName = "Desert";
     QString exitName = ui->exitLineEdit->text();
@@ -24,6 +25,7 @@ void prompterAddExit::on_okButton_clicked()
     QString targetName = ui->targetComboBox->currentText();
     targetName = "Cave";
     emit addExit(roomName, exitName, targetName);
+
     qDebug() << "prompterAddExit has added exits, now closing";
     this->close();
 }
