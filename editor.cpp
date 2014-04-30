@@ -66,12 +66,13 @@ void editor::on_deleteRoom_clicked()
 void editor::sceneClicked()
 {
 /*
-
-Get the point in the global scope and translate it to the
-scene's scope. This allows us to easily delete objects
-without having to manually translate. Particularly useful
-when the origin on the scene has been moved (which *will* happen).
-
+    Function: Get the point in the global scope and translate it to the
+    scene's scope. This allows us to easily delete objects without having
+    to manually translate. Particularly useful when the origin on the
+    scene has been moved (which *will* happen) as the objects move around.
+    Requires: void
+    Returns: void
+    Author: Uzair Shamim
 */
 
     // Determine what should be done on mouse click, depending on the mode
@@ -88,6 +89,16 @@ when the origin on the scene has been moved (which *will* happen).
 
 void editor::dialogCreateRoomConfirmed(QString roomName)
 {
+/*
+    Function: When a user clicks the Create Room button, the slot for the
+    buttons click state emits a signal that is connected to this function.
+    We use the Room class to create an object and then pass it's location
+    to a QMap. At the same time we also create the guiRoom to represent
+    the room on the screen by passing it to scene which takes ownership.
+    Requires: QString
+    Returns: void
+    Author: Uzair Shamim
+*/
     qDebug() << "dialogCreateRoomConfirmed: new room recieved";
     dataRoom = new Room();
     rooms->insert(roomName, dataRoom);
@@ -100,13 +111,16 @@ void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QStrin
 {
     qDebug() << "dialogAddExitConfirmed: new portal recieved";
     rooms->value(roomName)->addPortal(portalName, target);
+    rooms->value(target)->addPortal(portalName, roomName);
     qDebug() << "dialogAddExitConfirmed: portal added, function end";
 }
 
 void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
 {
     qDebug() << "dialogRemoveExitConfirmed: portal to remove recieved";
+    QString otherRoom = rooms->value(roomName)->getPortals().value(portalName);
     rooms->value(roomName)->removePortal(portalName);
+    rooms->value(otherRoom)->removePortal(portalName);
     qDebug() << "dialogRemoveExitConfirmed: portal removed, function end";
 }
 

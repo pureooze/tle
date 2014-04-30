@@ -13,8 +13,8 @@ void Room::addPortal(QString name, QString id)
 {
 /*
     Function: Add a new portal to the QMap that contains
-    a list of the possible exits.
-    Requires: Portal Name, Room ID
+    a list of the possible portal.
+    Requires: QString, QString
     Returns: void
     Author: Uzair Shamim
 */
@@ -25,12 +25,25 @@ void Room::addPortal(QString name, QString id)
 
 void Room::removePortal(QString name)
 {
+/*
+    Function: Remove a portal from the QMap that contains
+    a list of the possible portal.
+    Requires: QString
+    Returns: void
+    Author: Uzair Shamim
+*/
     qDebug() << "Attempting to remove portal" << name;
     portals.remove(name);
 }
 
 void Room::displayPortals()
 {
+/*
+    Function: Display all the portals for the room
+    Requires: void
+    Returns: void
+    Author: Uzair Shamim
+*/
     qDebug() << portals;
 }
 
