@@ -1,6 +1,8 @@
 simple-textgame-editor
 ======================
 
-* License
-** SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
+License
+-------
+
+### SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
 
