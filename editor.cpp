@@ -30,9 +30,7 @@ void editor::on_createRoom_clicked()
     qDebug() << "pressed";
     promptCreateRoomWindow = new prompterCreateRoom;
     promptCreateRoomWindow->setModal(true);
-    connect(promptAddExitWindow, SIGNAL(addExit(QString)), this,\
-            SLOT(dialogAddExitConfirmed(QString)));
-    promptCreateRoomWindow->setMap(rooms);
+    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this, SLOT(dialogCreateRoomConfirmed(QString)));
     promptCreateRoomWindow->exec();
 }
 
@@ -42,6 +40,7 @@ void editor::on_addExit_clicked()
     promptAddExitWindow->setModal(true);
     connect(promptAddExitWindow, SIGNAL(addExit(QString, QString, QString)), this,\
             SLOT(dialogAddExitConfirmed(QString, QString, QString)));
+    promptAddExitWindow->setMap(rooms);
     promptAddExitWindow->exec();
 }
 
@@ -85,6 +84,12 @@ when the origin on the scene has been moved (which *will* happen).
 
 void editor::dialogCreateRoomConfirmed(QString roomName)
 {
+    qDebug() << "dialogCreateRoomConfirmed: new room recieved";
+    dataRoom = new Room();
+    rooms->insert(roomName, dataRoom);
+    guiRoom = new RoomGUI();
+    scene->addItem(guiRoom);
+    qDebug() << "dialogCreateRoomConfirmed: room created, function end";
 }
 
 void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QString target)

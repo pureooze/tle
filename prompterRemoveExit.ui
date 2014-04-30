@@ -42,8 +42,8 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>30</y>
+     <x>51</x>
+     <y>31</y>
      <width>331</width>
      <height>58</height>
     </rect>
@@ -53,7 +53,7 @@
      <widget class="QComboBox" name="targetComboBox"/>
     </item>
     <item>
-     <widget class="QLineEdit" name="exitLineEdit"/>
+     <widget class="QComboBox" name="portalComboBox"/>
     </item>
    </layout>
   </widget>

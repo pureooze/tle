@@ -1,5 +1,6 @@
 #include "prompterCreateRoom.h"
 #include "ui_prompterCreateRoom.h"
+#include <QDebug>
 
 prompterCreateRoom::prompterCreateRoom(QWidget *parent) :
     QDialog(parent),
@@ -24,4 +25,7 @@ void prompterCreateRoom::on_okButton_clicked()
 
     QString roomName = ui->roomNameLineEdit->text();
     emit createRoom(roomName);
+
+    qDebug() << "prompterCreateRoom: created room, now closing";
+    this->close();
 }

@@ -23,8 +23,11 @@ private slots:
     void on_cancelButton_clicked();
     void on_okButton_clicked();
 
+    void on_targetComboBox_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::prompterRemoveExit *ui;
+    QMap<QString, Room *> *map;
 
 signals:
     void removeExit(QString, QString);
