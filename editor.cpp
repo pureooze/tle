@@ -30,7 +30,8 @@ void editor::on_createRoom_clicked()
     qDebug() << "pressed";
     promptCreateRoomWindow = new prompterCreateRoom;
     promptCreateRoomWindow->setModal(true);
-    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this, SLOT(dialogCreateRoomConfirmed(QString)));
+    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this,\
+            SLOT(dialogCreateRoomConfirmed(QString)));
     promptCreateRoomWindow->exec();
 }
 

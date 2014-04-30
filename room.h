@@ -12,6 +12,7 @@ public:
     void addPortal(QString name, QString id);
     void removePortal(QString name);
     void displayPortals();
+    QMap<QString, QString> getPortals();
 
 private:
     QString title;

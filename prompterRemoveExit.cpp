@@ -20,9 +20,11 @@ void prompterRemoveExit::setMap(QMap<QString, Room *> *map)
     }
 
     this->map = map;
-//    for(auto i : map->value(ui->targetComboBox->currentText())->displayPortals()){
-//        qDebug() << i;
-//    }
+    this->portals = this->map->value(ui->targetComboBox->currentText())->getPortals();
+
+    for(auto i : portals.keys()){
+        ui->portalComboBox->addItem(i);
+    }
 }
 
 void prompterRemoveExit::on_cancelButton_clicked()
@@ -44,5 +46,10 @@ void prompterRemoveExit::on_okButton_clicked()
 
 void prompterRemoveExit::on_targetComboBox_currentIndexChanged(const QString &arg1)
 {
-
+    ui->portalComboBox->clear();
+    qDebug() << this->map->value(ui->targetComboBox->currentText());
+//    this->portals = this->map->value(ui->targetComboBox->currentText())->getPortals();
+//    for(auto i : portals.keys()){
+//        ui->portalComboBox->addItem(i);
+//    }
 }

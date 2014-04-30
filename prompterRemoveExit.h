@@ -28,6 +28,7 @@ private slots:
 private:
     Ui::prompterRemoveExit *ui;
     QMap<QString, Room *> *map;
+    QMap<QString, QString> portals;
 
 signals:
     void removeExit(QString, QString);

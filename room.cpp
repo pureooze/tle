@@ -33,3 +33,8 @@ void Room::displayPortals()
 {
     qDebug() << portals;
 }
+
+QMap<QString, QString> Room::getPortals()
+{
+    return portals;
+}
