@@ -42,8 +42,8 @@ void prompterRemoveExit::on_okButton_clicked()
     qDebug() << "prompterRemoveExit: OK pressed, sending signal";
 
     QString target = ui->targetComboBox->currentText();
-    QString exit = ui->portalComboBox->currentText();
-    emit removeExit(target, exit);
+    QString portal = ui->portalComboBox->currentText();
+    emit removeExit(target, portal);
 
     qDebug() << "prompterRemoveExit: removed portal, now closing";
     this->close();
