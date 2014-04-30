@@ -1,7 +1,7 @@
 #include "editor.h"
 #include "ui_editor.h"
 #include "room.h"
-#include "roomgui.h"
+#include "roomGui.h"
 #include "scene.h"
 #include "prompterAddExit.h"
 #include <QDebug>
@@ -28,21 +28,20 @@ editor::~editor()
 void editor::on_createRoom_clicked()
 {
     qDebug() << "pressed";
-    dataRoom = new Room();
-    Room *twoRoom = new Room();
-    rooms->insert("Desert", dataRoom);
-    rooms->insert("Cave", twoRoom);
-    guiRoom = new RoomGUI();
-    scene->addItem(guiRoom);
+    promptCreateRoomWindow = new prompterCreateRoom;
+    promptCreateRoomWindow->setModal(true);
+    connect(promptAddExitWindow, SIGNAL(addExit(QString)), this,\
+            SLOT(dialogAddExitConfirmed(QString)));
+    promptCreateRoomWindow->setMap(rooms);
+    promptCreateRoomWindow->exec();
 }
 
 void editor::on_addExit_clicked()
 {
     promptAddExitWindow = new prompterAddExit;
     promptAddExitWindow->setModal(true);
-    connect(promptAddExitWindow, SIGNAL(addExit(const QString &, const QString &, const QString &)), this,\
-            SLOT(dialogAddExitConfirmed(const QString &, const QString &, const QString &)));
-    promptAddExitWindow->setMap(rooms);
+    connect(promptAddExitWindow, SIGNAL(addExit(QString, QString, QString)), this,\
+            SLOT(dialogAddExitConfirmed(QString, QString, QString)));
     promptAddExitWindow->exec();
 }
 
@@ -84,14 +83,9 @@ when the origin on the scene has been moved (which *will* happen).
     }
 }
 
-//void editor::dialogConfirmed()
-//{
-//    qDebug() << "pressed";
-//    dataRoom = new Room();
-//    rooms->insert("Forest", dataRoom);
-//    guiRoom = new RoomGUI();
-//    scene->addItem(guiRoom);
-//}
+void editor::dialogCreateRoomConfirmed(QString roomName)
+{
+}
 
 void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QString target)
 {
@@ -107,3 +101,24 @@ void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
     qDebug() << "dialogRemoveExitConfirmed: portal removed, function end";
 }
 
+
+
+
+
+
+
+/*
+ * BEWARE ALL WHO ENTER HERE
+ *
+ * THIS IS LAND OF THE DEADLY COMMENTED CODE
+ *
+*/
+
+//void editor::dialogConfirmed()
+//{
+//    qDebug() << "pressed";
+//    dataRoom = new Room();
+//    rooms->insert("Forest", dataRoom);
+//    guiRoom = new RoomGUI();
+//    scene->addItem(guiRoom);
+//}

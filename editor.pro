@@ -17,19 +17,22 @@ SOURCES += \
     main.cpp \
     room.cpp \
     scene.cpp \
-    roomgui.cpp \
     prompterAddExit.cpp \
-    prompterRemoveExit.cpp
+    prompterRemoveExit.cpp \
+    prompterCreateRoom.cpp \
+    roomGui.cpp
 
 HEADERS  += \
     editor.h \
     room.h \
     scene.h \
-    roomgui.h \
     prompterAddExit.h \
-    prompterRemoveExit.h
+    prompterRemoveExit.h \
+    prompterCreateRoom.h \
+    roomGui.h
 
 FORMS    += \
     editor.ui \
     prompterAddExit.ui \
-    prompterRemoveExit.ui
+    prompterRemoveExit.ui \
+    prompterCreateRoom.ui

@@ -1,4 +1,4 @@
-#include "roomgui.h"
+#include "roomGui.h"
 #include <QPainter>
 
 RoomGUI::RoomGUI()

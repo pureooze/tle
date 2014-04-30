@@ -2,8 +2,9 @@
 #define EDITOR_H
 
 #include "room.h"
-#include "roomgui.h"
+#include "roomGui.h"
 #include "scene.h"
+#include "prompterCreateRoom.h"
 #include "prompterAddExit.h"
 #include "prompterRemoveExit.h"
 #include <QMainWindow>
@@ -36,6 +37,7 @@ private:
     Room *dataRoom;
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
+    prompterCreateRoom *promptCreateRoomWindow;
     prompterAddExit *promptAddExitWindow;
     prompterRemoveExit *promptRemoveExitWindow;
 
@@ -44,6 +46,7 @@ protected:
 
 public slots:
     void sceneClicked();
+    void dialogCreateRoomConfirmed(QString roomName);
     void dialogAddExitConfirmed(QString roomName, QString portalName, QString target);
     void dialogRemoveExitConfirmed(QString roomName, QString portalName);
 };
