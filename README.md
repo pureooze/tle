@@ -1,9 +1,6 @@
 simple-textgame-editor
 ======================
 
-License
--------
-
 #### SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
 A level editor/engine that can be used to generate maps for text games.
 Copyright (C) 2014 Uzair Shamim
