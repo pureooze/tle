@@ -14,68 +14,47 @@
    <string>editor</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGraphicsView" name="graphicsView">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>10</y>
-      <width>511</width>
-      <height>341</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="deleteRoom">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>390</y>
-      <width>80</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete Room</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="removeExit">
-    <property name="geometry">
-     <rect>
-      <x>264</x>
-      <y>390</y>
-      <width>82</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Remove Exit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="addExit">
-    <property name="geometry">
-     <rect>
-      <x>156</x>
-      <y>390</y>
-      <width>80</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Add Exit</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="createRoom">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>390</y>
-      <width>86</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Create Room</string>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QGraphicsView" name="graphicsView"/>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="createRoom">
+          <property name="text">
+           <string>Create Room</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addExit">
+          <property name="text">
+           <string>Add Exit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="removeExit">
+          <property name="text">
+           <string>Remove Exit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="deleteRoom">
+          <property name="text">
+           <string>Delete Room</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

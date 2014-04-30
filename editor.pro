@@ -17,13 +17,16 @@ SOURCES += \
     main.cpp \
     room.cpp \
     scene.cpp \
-    roomgui.cpp
+    roomgui.cpp \
+    prompter.cpp
 
 HEADERS  += \
     editor.h \
     room.h \
     scene.h \
-    roomgui.h
+    roomgui.h \
+    prompter.h
 
 FORMS    += \
-    editor.ui
+    editor.ui \
+    prompter.ui

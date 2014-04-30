@@ -4,10 +4,10 @@
 #include "room.h"
 #include "roomgui.h"
 #include "scene.h"
+#include "prompter.h"
 #include <QMainWindow>
 #include <QMap>
-#include <QtCore>
-#include <QtGui>
+#include <QGraphicsScene>
 
 namespace Ui {
 class editor;
@@ -35,12 +35,14 @@ private:
     Room *dataRoom;
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
+    prompter *promptWindow;
 
 protected:
     //void paintEvent(QPaintEvent *e);
 
 public slots:
     void sceneClicked();
+    void dialogConfirmed();
 };
 
 #endif // EDITOR_H

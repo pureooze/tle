@@ -1,5 +1,5 @@
 #include "roomgui.h"
-#include "QPainter"
+#include <QPainter>
 
 RoomGUI::RoomGUI()
 {
