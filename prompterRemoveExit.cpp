@@ -8,6 +8,7 @@ prompterRemoveExit::prompterRemoveExit(QWidget *parent) :
     ui(new Ui::prompterRemoveExit)
 {
     ui->setupUi(this);
+    portals = new QList< QMap<QString, QString> >;
 }
 
 prompterRemoveExit::~prompterRemoveExit()
@@ -15,26 +16,20 @@ prompterRemoveExit::~prompterRemoveExit()
     delete ui;
 }
 
-void prompterRemoveExit::setMap(QMap<QString, Room *> *rooms)
+void prompterRemoveExit::setMap(QMap<QString, Room *> rooms)
 {
-    for(auto i : rooms->keys()){
+    qDebug() << "prompterRemoveExit: rooms recieved, starting";
+    for(auto i : rooms.keys()){
         ui->targetComboBox->addItem(i);
+        portals->append(rooms.value(i)->getPortals());
     }
-
-    this->portals = (*rooms).value(ui->targetComboBox->currentText())->getPortals();
-    data = new QMap<QString, Room *>;
-
-    for(auto i : rooms->keys()){
-        data->insert(i, rooms->value(i));
-        qDebug() << data->values();
+    qDebug() << "prompterRemoveExit: rooms added to db, ending";
+    if(portals->length() > 1){
+        ui->targetComboBox->setCurrentIndex(1);
+        ui->targetComboBox->setCurrentIndex(0);
+    }else{
+        qDebug() << "0";
     }
-//    for(auto i : portals.keys()){
-//        ui->portalComboBox->addItem(i);
-//        QString bob = portals.value(i);
-//        qDebug() << i << bob;
-//        data->insert(i, bob);
-//        qDebug() << data->values();
-//    }
 }
 
 void prompterRemoveExit::on_cancelButton_clicked()
@@ -54,9 +49,10 @@ void prompterRemoveExit::on_okButton_clicked()
     this->close();
 }
 
-
-
 void prompterRemoveExit::on_targetComboBox_currentIndexChanged(int index)
 {
-    qDebug() << index;
+    ui->portalComboBox->clear();
+    for(auto i : portals->value(index).keys()){
+        ui->portalComboBox->addItem(i);
+    }
 }

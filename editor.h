@@ -51,7 +51,7 @@ public slots:
     void dialogRemoveExitConfirmed(QString roomName, QString portalName);
 
 signals:
-    void setRoomMap();
+    void setRoomMap(QMap<QString,Room*>);
 };
 
 #endif // EDITOR_H

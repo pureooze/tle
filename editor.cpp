@@ -53,8 +53,8 @@ void editor::on_removeExit_clicked()
     connect(promptRemoveExitWindow, SIGNAL(removeExit(QString,QString)), this,\
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
     connect(this, SIGNAL(setRoomMap(QMap<QString,Room*>)), promptRemoveExitWindow,\
-            SLOT(setMap(QMap<QString,Room*>));
-    emit setRoomMap(rooms);
+            SLOT(setMap(QMap<QString,Room*>)));
+    emit setRoomMap(*rooms);
     promptRemoveExitWindow->exec();
 }
 

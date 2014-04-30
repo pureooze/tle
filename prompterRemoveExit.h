@@ -4,6 +4,7 @@
 #include "room.h"
 #include <QDialog>
 #include <QMap>
+#include <QList>
 
 namespace Ui {
 class prompterRemoveExit;
@@ -20,14 +21,17 @@ public:
 private slots:
     void on_cancelButton_clicked();
     void on_okButton_clicked();
+
     void on_targetComboBox_currentIndexChanged(int index);
 
-    void setMap(QMap<QString, Room *>);
+public slots:
+    void setMap(QMap<QString, Room *> rooms);
 
 private:
     Ui::prompterRemoveExit *ui;
     QMap<QString, Room *> *data;
-    QMap<QString, QString> portals;
+    QList< QMap<QString, QString> > *portals;
+//    QMap<QString, QString> portals;
 
 signals:
     void removeExit(QString, QString);
