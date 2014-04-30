@@ -9,13 +9,13 @@ class Room
 {
 public:
     Room();
-    void addPortal(QString name, int id);
+    void addPortal(QString name, QString id);
     void removePortal(QString name);
     void displayPortals();
 
 private:
     QString title;
-    QMap<QString,int> portals;
+    QMap<QString,QString> portals;
 };
 
 #endif // ROOM_H

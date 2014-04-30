@@ -3,7 +3,7 @@
 #include "room.h"
 #include "roomgui.h"
 #include "scene.h"
-#include "prompter.h"
+#include "prompterAddExit.h"
 #include <QDebug>
 #include <QList>
 
@@ -17,7 +17,6 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
-    connect(promptWindow, SIGNAL(settingsSent()), this, SLOT(dialogConfirmed()));
     rooms = new QMap<QString, Room *>;
 }
 
@@ -28,22 +27,23 @@ editor::~editor()
 
 void editor::on_createRoom_clicked()
 {
+    qDebug() << "pressed";
     dataRoom = new Room();
-    prompter promptWindow;
-    promptWindow.setModal(true);
-    promptWindow.exec();
-    rooms->insert("Forest", dataRoom);
-
+    Room *twoRoom = new Room();
+    rooms->insert("Desert", dataRoom);
+    rooms->insert("Cave", twoRoom);
     guiRoom = new RoomGUI();
     scene->addItem(guiRoom);
 }
 
 void editor::on_addExit_clicked()
 {
-
-    QString portalName = "caveEntrance";
-    int portalToRoom = 4;
-    rooms->value("Forest")->addPortal(portalName, 3);
+    promptWindow = new prompterAddExit;
+    promptWindow->setModal(true);
+    connect(promptWindow, SIGNAL(addExit(const QString &, const QString &, const QString &)), this,\
+            SLOT(dialogAddExitConfirmed(const QString &, const QString &, const QString &)));
+    promptWindow->setMap(rooms);
+    promptWindow->exec();
 }
 
 void editor::on_removeExit_clicked()
@@ -81,7 +81,18 @@ void editor::sceneClicked()
     }
 }
 
-void editor::dialogConfirmed()
+//void editor::dialogConfirmed()
+//{
+//    qDebug() << "pressed";
+//    dataRoom = new Room();
+//    rooms->insert("Forest", dataRoom);
+//    guiRoom = new RoomGUI();
+//    scene->addItem(guiRoom);
+//}
+
+void editor::dialogAddExitConfirmed(QString roomName, QString exitName, QString target)
 {
-    qDebug() << "pressed";
+    qDebug() << "new exits recieved";
+    rooms->value(roomName)->addPortal(exitName, target);
+    rooms->value(roomName)->displayPortals();
 }

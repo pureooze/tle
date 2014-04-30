@@ -9,7 +9,7 @@ Room::Room()
 }
 
 
-void Room::addPortal(QString name, int id)
+void Room::addPortal(QString name, QString id)
 {
 /*
     Function: Add a new portal to the QMap that contains
