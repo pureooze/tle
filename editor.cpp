@@ -92,9 +92,9 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
 /*
     Function: When a user clicks the Create Room button, the slot for the
     buttons click state emits a signal that is connected to this function.
-    We use the Room class to create an object and then pass it's location
-    to a QMap. At the same time we also create the guiRoom to represent
-    the room on the screen by passing it to scene which takes ownership.
+    Use the Room class to create an object and then pass it's location
+    to a QMap. Then create the guiRoom to represent the room on the screen
+    by passing it to scene which takes ownership.
     Requires: QString
     Returns: void
     Author: Uzair Shamim
@@ -109,6 +109,16 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
 
 void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QString target)
 {
+/*
+    Function: When a user clicks the Add Exit button, the slot for the
+    buttons click state emits a signal that is connected to this function.
+    Use the QMap rooms that contains all the Room objects and call its
+    function addPortal. Then switch the target and roomName so that both
+    the target and room referenced by roomName are linked to each other.
+    Requires: QString, QString, QString
+    Returns: void
+    Author: Uzair Shamim
+*/
     qDebug() << "dialogAddExitConfirmed: new portal recieved";
     rooms->value(roomName)->addPortal(portalName, target);
     rooms->value(target)->addPortal(portalName, roomName);
@@ -117,6 +127,16 @@ void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QStrin
 
 void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
 {
+/*
+    Function: When a user clicks the Remove Exit button, the slot for the
+    buttons click state emits a signal that is connected to this function.
+    Use the QMap rooms to access the Room objects and call their method
+    getPortals, filtering for the room that is the target of the portal
+    referenced by portalName. Then remove both rooms using removePortal.
+    Requires: QString, QString
+    Returns: void
+    Author: Uzair Shamim
+*/
     qDebug() << "dialogRemoveExitConfirmed: portal to remove recieved";
     QString otherRoom = rooms->value(roomName)->getPortals().value(portalName);
     rooms->value(roomName)->removePortal(portalName);
@@ -134,6 +154,9 @@ void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
  * BEWARE ALL WHO ENTER HERE
  *
  * THIS IS LAND OF THE DEADLY COMMENTED CODE
+ *
+ * THERE IS NO GUARANTEE THIS CODE WILL WORK
+ * IN FACT IT PROBABLY WONT SO DONT TRY IT
  *
 */
 
