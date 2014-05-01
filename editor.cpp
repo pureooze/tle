@@ -1,7 +1,6 @@
 #include "editor.h"
 #include "ui_editor.h"
 #include "room.h"
-#include "roomGui.h"
 #include "scene.h"
 #include "prompterAddExit.h"
 #include <QDebug>
@@ -49,7 +48,6 @@ void editor::on_removeExit_clicked()
 {
     promptRemoveExitWindow = new prompterRemoveExit;
     promptRemoveExitWindow->setModal(true);
-    //promptRemoveExitWindow->setMap(rooms);
     connect(promptRemoveExitWindow, SIGNAL(removeExit(QString,QString)), this,\
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
     connect(this, SIGNAL(setRoomMap(QMap<QString,Room*>)), promptRemoveExitWindow,\
@@ -66,26 +64,27 @@ void editor::on_deleteRoom_clicked()
 void editor::sceneClicked()
 {
 /*
-    Function: Get the point in the global scope and translate it to the
+    Function: Get the point in the QWidget scope and translate it to the
     scene's scope. This allows us to easily delete objects without having
     to manually translate. Particularly useful when the origin on the
     scene has been moved (which *will* happen) as the objects move around.
+
     Requires: void
     Returns: void
     Author: Uzair Shamim
 */
-
+    qDebug() << "Mode is" << mode;
     // Determine what should be done on mouse click, depending on the mode
     if(mode == "deleteRoom"){
-        qDebug() << "Mode is" << mode;
         QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
         QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
         Room *roomGUI = (Room*)scene->itemAt(relativeOrigin, QTransform());
-        qDebug() << roomGUI->test;
+        rooms->remove(roomGUI->name);
+        qDebug() << rooms->keys();
         scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
         mode = "normal";
     }else{
-        qDebug() << "Mode is" << mode;
+        ;;
     }
 }
 
@@ -97,6 +96,7 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     Use the Room class to create an object and then pass it's location
     to a QMap. Then create the guiRoom to represent the room on the screen
     by passing it to scene which takes ownership.
+
     Requires: QString
     Returns: void
     Author: Uzair Shamim
@@ -104,6 +104,7 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     qDebug() << "dialogCreateRoomConfirmed: new room recieved";
     dataRoom = new Room();
     rooms->insert(roomName, dataRoom);
+    dataRoom->setName(roomName);
 //    guiRoom = new RoomGUI();
     scene->addItem(dataRoom);
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
@@ -117,6 +118,7 @@ void editor::dialogAddExitConfirmed(QString roomName, QString portalName, QStrin
     Use the QMap rooms that contains all the Room objects and call its
     function addPortal. Then switch the target and roomName so that both
     the target and room referenced by roomName are linked to each other.
+
     Requires: QString, QString, QString
     Returns: void
     Author: Uzair Shamim
@@ -135,6 +137,7 @@ void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
     Use the QMap rooms to access the Room objects and call their method
     getPortals, filtering for the room that is the target of the portal
     referenced by portalName. Then remove both rooms using removePortal.
+
     Requires: QString, QString
     Returns: void
     Author: Uzair Shamim

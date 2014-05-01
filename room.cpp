@@ -7,7 +7,6 @@ Room::Room()
 {
     pressed = false;
     setFlag(ItemIsMovable);
-    test = "aaaaaaaaaa";
 }
 
 void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -80,6 +79,11 @@ void Room::displayPortals()
     Author: Uzair Shamim
 */
     qDebug() << portals;
+}
+
+void Room::setName(QString name)
+{
+    this->name = name;
 }
 
 QMap<QString, QString> Room::getPortals()

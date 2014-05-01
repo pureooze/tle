@@ -15,14 +15,14 @@ public:
     void addPortal(QString name, QString id);
     void removePortal(QString name);
     void displayPortals();
+    void setName(QString name);
 
     bool pressed;
     QMap<QString, QString> getPortals();
     QRectF boundingRect() const;
-    QString test;
+    QString name;
 
 private:
-    QString title;
     QMap<QString,QString> portals;
 
 protected:

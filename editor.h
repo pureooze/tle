@@ -2,7 +2,6 @@
 #define EDITOR_H
 
 #include "room.h"
-#include "roomGui.h"
 #include "scene.h"
 #include "prompterCreateRoom.h"
 #include "prompterAddExit.h"
