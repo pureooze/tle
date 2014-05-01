@@ -16,6 +16,7 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
+    connect(this, SIGNAL(removeExits(QString)), this, SLOT(removalCleanup(QString)));
     rooms = new QMap<QString, Room *>;
 }
 
@@ -78,15 +79,28 @@ void editor::sceneClicked()
     if(mode == "deleteRoom"){
         QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
         QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
-        Room *roomGUI = (Room*)scene->itemAt(relativeOrigin, QTransform());
-        rooms->remove(roomGUI->name);
-        qDebug() << rooms->keys();
-        scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
-        mode = "normal";
+        // Avoid segfault by making sure there is a room being clicked
+        if(scene->itemAt(relativeOrigin, QTransform())){
+            Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
+            emit removeExits(room->name);
+            rooms->remove(room->name);
+            scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
+            mode = "normal";
+        }
     }else{
         ;;
     }
 }
+
+void editor::removalCleanup(QString name)
+{
+    qDebug() << "removalCleanup: name recieved";
+    for(auto i: rooms->value(name)->getPortals()){
+        emit callExitRemoval("a", "c");
+        qDebug() << rooms->value("a")->getPortals();
+    }
+}
+
 
 void editor::dialogCreateRoomConfirmed(QString roomName)
 {
@@ -148,7 +162,6 @@ void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
     rooms->value(otherRoom)->removePortal(portalName);
     qDebug() << "dialogRemoveExitConfirmed: portal removed, function end";
 }
-
 
 
 
