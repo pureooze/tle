@@ -5,9 +5,44 @@
 
 Room::Room()
 {
-    qDebug() << "created";
+    pressed = false;
+    setFlag(ItemIsMovable);
+    test = "aaaaaaaaaa";
 }
 
+void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    QRectF rec = boundingRect();
+    QBrush brush(Qt::blue);
+
+    if(pressed){
+        brush.setColor(Qt::red);
+    }else{
+        brush.setColor(Qt::green);
+    }
+
+    painter->fillRect(rec, brush);
+    painter->drawRect(rec);
+}
+
+QRectF Room::boundingRect() const
+{
+    return QRectF(0, 0, 100, 100);
+}
+
+void Room::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    pressed = true;
+    update();
+    QGraphicsItem::mousePressEvent(event);
+}
+
+void Room::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    pressed = false;
+    update();
+    QGraphicsItem::mouseReleaseEvent(event);
+}
 
 void Room::addPortal(QString name, QString id)
 {

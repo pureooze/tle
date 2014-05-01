@@ -80,6 +80,8 @@ void editor::sceneClicked()
         qDebug() << "Mode is" << mode;
         QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
         QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+        Room *roomGUI = (Room*)scene->itemAt(relativeOrigin, QTransform());
+        qDebug() << roomGUI->test;
         scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
         mode = "normal";
     }else{
@@ -102,8 +104,8 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     qDebug() << "dialogCreateRoomConfirmed: new room recieved";
     dataRoom = new Room();
     rooms->insert(roomName, dataRoom);
-    guiRoom = new RoomGUI();
-    scene->addItem(guiRoom);
+//    guiRoom = new RoomGUI();
+    scene->addItem(dataRoom);
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
 }
 

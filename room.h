@@ -4,19 +4,30 @@
 #include <QMap>
 #include <QString>
 #include <QDebug>
+#include <QPainter>
+#include <QGraphicsItem>
 
-class Room
+class Room : public QGraphicsItem
 {
 public:
     Room();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void addPortal(QString name, QString id);
     void removePortal(QString name);
     void displayPortals();
+
+    bool pressed;
     QMap<QString, QString> getPortals();
+    QRectF boundingRect() const;
+    QString test;
 
 private:
     QString title;
     QMap<QString,QString> portals;
+
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // ROOM_H
