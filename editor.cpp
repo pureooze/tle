@@ -17,6 +17,8 @@ editor::editor(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
     connect(this, SIGNAL(removeExits(QString)), this, SLOT(removalCleanup(QString)));
+    connect(this, SIGNAL(callExitRemoval(QString,QString)), this, \
+            SLOT(dialogRemoveExitConfirmed(QString,QString)));
     rooms = new QMap<QString, Room *>;
 }
 
@@ -96,9 +98,10 @@ void editor::removalCleanup(QString name)
 {
     qDebug() << "removalCleanup: name recieved";
     for(auto i: rooms->value(name)->getPortals()){
-        emit callExitRemoval("a", "c");
-        qDebug() << rooms->value("a")->getPortals();
+        QString portal = rooms->value(name)->getPortals().key(i);
+        emit callExitRemoval(i, portal);
     }
+    qDebug() << "removalCleanup: completed";
 }
 
 
@@ -106,10 +109,9 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
 {
 /*
     Function: When a user clicks the Create Room button, the slot for the
-    buttons click state emits a signal that is connected to this function.
-    Use the Room class to create an object and then pass it's location
-    to a QMap. Then create the guiRoom to represent the room on the screen
-    by passing it to scene which takes ownership.
+    button click emits a signal that is connected to this function. Use
+    the Room class to create an object and then pass it's location to a
+    QMap. Then pass the Room object to the QGraphicsScene to display.
 
     Requires: QString
     Returns: void
@@ -119,7 +121,6 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     dataRoom = new Room();
     rooms->insert(roomName, dataRoom);
     dataRoom->setName(roomName);
-//    guiRoom = new RoomGUI();
     scene->addItem(dataRoom);
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
 }

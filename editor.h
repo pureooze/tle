@@ -53,7 +53,7 @@ public slots:
 signals:
     void setRoomMap(QMap<QString,Room*>);
     void removeExits(QString);
-    void callExitRemoval(QString);
+    void callExitRemoval(QString, QString);
 };
 
 #endif // EDITOR_H
