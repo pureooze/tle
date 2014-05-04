@@ -36,6 +36,7 @@ private:
     Room *dataRoom;
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
+    QString selectedRoom = "";
     prompterCreateRoom *promptCreateRoomWindow;
     prompterAddExit *promptAddExitWindow;
     prompterRemoveExit *promptRemoveExitWindow;

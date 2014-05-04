@@ -77,10 +77,12 @@ void editor::sceneClicked()
     Author: Uzair Shamim
 */
     qDebug() << "Mode is" << mode;
+    qDebug() << selectedRoom;
+    QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
+    QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+
     // Determine what should be done on mouse click, depending on the mode
     if(mode == "deleteRoom"){
-        QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
-        QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
         // Avoid segfault by making sure there is a room being clicked
         if(scene->itemAt(relativeOrigin, QTransform())){
             Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
@@ -90,7 +92,14 @@ void editor::sceneClicked()
             mode = "normal";
         }
     }else{
-        ;;
+        if(scene->itemAt(relativeOrigin, QTransform())){
+            Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
+            selectedRoom = room->name;
+            ui->scrollArea->setEnabled(true);
+        }else{
+            selectedRoom = "";
+            ui->scrollArea->setEnabled(false);
+        }
     }
 }
 
