@@ -31,6 +31,7 @@ private slots:
     void on_roomListWidget_clicked(const QModelIndex &index);
     void on_actionCreateRoom_triggered();
     void on_actionDeleteRoom_triggered();
+    void changeRoomListSelection(QString name);
 
 private:
     Ui::editor *ui;
@@ -60,6 +61,7 @@ signals:
     void removeExits(QString);
     void callExitRemoval(QString, QString);
     void displayPortals(QMap<QString, QString> );
+    void changeListSelection(QString);
 };
 
 #endif // EDITOR_H

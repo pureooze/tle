@@ -17,6 +17,8 @@ editor::editor(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
     connect(this, SIGNAL(createRoomSig()), this, SLOT(createRoom()));
+    connect(this, SIGNAL(changeListSelection(QString)), this,\
+            SLOT(changeRoomListSelection(QString)));
     connect(this, SIGNAL(removeExits(QString)), this, SLOT(removalCleanup(QString)));
     connect(this, SIGNAL(callExitRemoval(QString,QString)), this, \
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
@@ -40,6 +42,16 @@ void editor::on_actionCreateRoom_triggered()
 void editor::on_actionDeleteRoom_triggered()
 {
     mode = "deleteRoom";
+}
+
+void editor::changeRoomListSelection(QString name)
+{
+    for(int i = 0; i < ui->roomListWidget->count(); i++){
+        if(ui->roomListWidget->item(i)->text() == name){
+            ui->roomListWidget->item(i)->setSelected(true);
+            break;
+        }
+    }
 }
 
 void editor::on_addExit_clicked()
@@ -116,7 +128,8 @@ void editor::sceneClicked()
             Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
             selectedRoom = room->name;
             ui->scrollArea->setEnabled(true);
-            ui->label->setText(room->name);
+            ui->lineEdit->setText(room->name);
+            emit changeListSelection(room->name);
             emit displayPortals(room->getPortals());
         }else{
             selectedRoom = "";
@@ -205,7 +218,7 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
     int in = ui->roomListWidget->currentRow();
     selectedRoom = ui->roomListWidget->item(in)->text();
     ui->scrollArea->setEnabled(true);
-    ui->label->setText(selectedRoom);
+    ui->lineEdit->setText(selectedRoom);
     emit displayPortals(rooms->value(selectedRoom)->getPortals());
 }
 
