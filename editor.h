@@ -30,6 +30,8 @@ private slots:
     //void removeRoom();
     void addPortalsListView(QMap<QString, QString> portals);
 
+    void on_roomListWidget_clicked(const QModelIndex &index);
+
 private:
     Ui::editor *ui;
     Scene *scene;

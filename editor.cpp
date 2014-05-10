@@ -75,9 +75,9 @@ void editor::on_deleteRoom_clicked()
 
 void editor::addPortalsListView(QMap<QString, QString> portals)
 {
-    ui->listWidget->clear();
+    ui->portalListWidget->clear();
     for(auto i: portals.keys()){
-        ui->listWidget->addItem(i);
+        ui->portalListWidget->addItem(i);
     }
 }
 
@@ -150,6 +150,7 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     rooms->insert(roomName, dataRoom);
     dataRoom->setName(roomName);
     scene->addItem(dataRoom);
+    ui->roomListWidget->addItem(roomName);
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
 }
 
@@ -192,7 +193,15 @@ void editor::dialogRemoveExitConfirmed(QString roomName, QString portalName)
     qDebug() << "dialogRemoveExitConfirmed: portal removed, function end";
 }
 
-
+void editor::on_roomListWidget_clicked(const QModelIndex &index)
+{
+    int in = ui->roomListWidget->currentRow();
+    selectedRoom = ui->roomListWidget->item(in)->text();
+    ui->scrollArea->setEnabled(true);
+    ui->label->setText(selectedRoom);
+    Room *room = (Room *)rooms->value(selectedRoom);
+    emit displayPortals(room->getPortals());
+}
 
 
 
