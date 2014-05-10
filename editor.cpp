@@ -260,3 +260,17 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
 //    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
 //    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
 //             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
+
+void editor::on_lineEdit_returnPressed()
+{
+    for(int i = 0; i < ui->roomListWidget->count(); i++){
+        if(ui->roomListWidget->item(i)->text() == selectedRoom){
+            ui->roomListWidget->item(i)->setText(ui->lineEdit->text());
+            Room *temp = rooms->value(selectedRoom);
+            temp->setName(ui->lineEdit->text());
+            rooms->remove(selectedRoom);
+            rooms->insert(ui->lineEdit->text(), temp);
+            break;
+        }
+    }
+}

@@ -33,6 +33,8 @@ private slots:
     void on_actionDeleteRoom_triggered();
     void changeRoomListSelection(QString name);
 
+    void on_lineEdit_returnPressed();
+
 private:
     Ui::editor *ui;
     Scene *scene;
