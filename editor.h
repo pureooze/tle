@@ -28,6 +28,7 @@ private slots:
     void on_removeExit_clicked();
     void on_deleteRoom_clicked();
     //void removeRoom();
+    void addPortalsListView(QMap<QString, QString> portals);
 
 private:
     Ui::editor *ui;
@@ -55,6 +56,7 @@ signals:
     void setRoomMap(QMap<QString,Room*>);
     void removeExits(QString);
     void callExitRemoval(QString, QString);
+    void displayPortals(QMap<QString, QString> );
 };
 
 #endif // EDITOR_H
