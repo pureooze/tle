@@ -3,7 +3,6 @@
 
 #include "room.h"
 #include "scene.h"
-#include "prompterCreateRoom.h"
 #include "prompterAddExit.h"
 #include "prompterRemoveExit.h"
 #include <QMainWindow>
