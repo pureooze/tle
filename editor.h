@@ -23,13 +23,13 @@ public:
     ~editor();
 
 private slots:
+    void createRoom();
     void on_addExit_clicked();
     void on_removeExit_clicked();
     //void removeRoom();
     void addPortalsListView(QMap<QString, QString> portals);
     void on_roomListWidget_clicked(const QModelIndex &index);
     void on_actionCreateRoom_triggered();
-
     void on_actionDeleteRoom_triggered();
 
 private:
@@ -43,18 +43,19 @@ private:
     prompterCreateRoom *promptCreateRoomWindow;
     prompterAddExit *promptAddExitWindow;
     prompterRemoveExit *promptRemoveExitWindow;
+    int roomCount = 0;
 
 protected:
     //void paintEvent(QPaintEvent *e);
 
 public slots:
     void sceneClicked();
-    void dialogCreateRoomConfirmed(QString roomName);
     void dialogAddExitConfirmed(QString roomName, QString portalName, QString target);
     void dialogRemoveExitConfirmed(QString roomName, QString portalName);
     void removalCleanup(QString name);
 
 signals:
+    void createRoomSig();
     void setRoomMap(QMap<QString,Room*>);
     void removeExits(QString);
     void callExitRemoval(QString, QString);

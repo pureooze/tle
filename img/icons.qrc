@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/icons">
-        <file>icons/create.png</file>
-        <file>icons/delete.png</file>
+        <file>icons/create_link.png</file>
+        <file>icons/create_node.png</file>
+        <file>icons/delete_link.png</file>
+        <file>icons/delete_node.png</file>
     </qresource>
 </RCC>

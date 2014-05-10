@@ -27,8 +27,8 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>100</width>
-          <height>100</height>
+          <width>200</width>
+          <height>200</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -48,15 +48,33 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>205</width>
-           <height>542</height>
+           <width>198</width>
+           <height>556</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QLabel" name="roomSelectionLabel">
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>25</height>
+               </size>
+              </property>
               <property name="text">
                <string>Room Selection</string>
               </property>
@@ -103,17 +121,41 @@
                  <layout class="QHBoxLayout" name="horizontalLayout">
                   <item>
                    <widget class="QPushButton" name="addExit">
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
                     <property name="text">
-                     <string>Add Portal</string>
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="img/icons.qrc">
+                      <normaloff>:/icons/icons/create_link.png</normaloff>:/icons/icons/create_link.png</iconset>
                     </property>
                    </widget>
                   </item>
                   <item>
                    <widget class="QPushButton" name="removeExit">
                     <property name="text">
-                     <string>Rem Portal</string>
+                     <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="img/icons.qrc">
+                      <normaloff>:/icons/icons/delete_link.png</normaloff>:/icons/icons/delete_link.png</iconset>
                     </property>
                    </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
                   </item>
                  </layout>
                 </item>
@@ -151,18 +193,6 @@
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -190,12 +220,14 @@
    </attribute>
    <addaction name="actionCreateRoom"/>
    <addaction name="actionDeleteRoom"/>
+   <addaction name="actionCreatePortal"/>
+   <addaction name="actionDeletePortal"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionCreateRoom">
    <property name="icon">
     <iconset resource="img/icons.qrc">
-     <normaloff>:/icons/icons/create.png</normaloff>:/icons/icons/create.png</iconset>
+     <normaloff>:/icons/icons/create_node.png</normaloff>:/icons/icons/create_node.png</iconset>
    </property>
    <property name="text">
     <string>createRoom</string>
@@ -204,13 +236,31 @@
   <action name="actionDeleteRoom">
    <property name="icon">
     <iconset resource="img/icons.qrc">
-     <normaloff>:/icons/icons/delete.png</normaloff>:/icons/icons/delete.png</iconset>
+     <normaloff>:/icons/icons/delete_node.png</normaloff>:/icons/icons/delete_node.png</iconset>
    </property>
    <property name="text">
     <string>deleteRoom</string>
    </property>
    <property name="toolTip">
     <string>Delete Room</string>
+   </property>
+  </action>
+  <action name="actionCreatePortal">
+   <property name="icon">
+    <iconset resource="img/icons.qrc">
+     <normaloff>:/icons/icons/create_link.png</normaloff>:/icons/icons/create_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>createPortal</string>
+   </property>
+  </action>
+  <action name="actionDeletePortal">
+   <property name="icon">
+    <iconset resource="img/icons.qrc">
+     <normaloff>:/icons/icons/delete_link.png</normaloff>:/icons/icons/delete_link.png</iconset>
+   </property>
+   <property name="text">
+    <string>deletePortal</string>
    </property>
   </action>
  </widget>

@@ -16,12 +16,14 @@ editor::editor(QWidget *parent) :
     scene = new Scene();
     ui->graphicsView->setScene(scene);
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
+    connect(this, SIGNAL(createRoomSig()), this, SLOT(createRoom()));
     connect(this, SIGNAL(removeExits(QString)), this, SLOT(removalCleanup(QString)));
     connect(this, SIGNAL(callExitRemoval(QString,QString)), this, \
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
     connect(this, SIGNAL(displayPortals(QMap<QString,QString>)), this,\
             SLOT(addPortalsListView(QMap<QString,QString>)));
     rooms = new QMap<QString, Room *>;
+    ui->graphicsView->setSceneRect(0, 0, 5000, 5000);
 }
 
 editor::~editor()
@@ -32,13 +34,7 @@ editor::~editor()
 void editor::on_actionCreateRoom_triggered()
 {
     qDebug() << "pressed";
-    promptCreateRoomWindow = new prompterCreateRoom;
-    promptCreateRoomWindow->setModal(true);
-
-    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this,\
-            SLOT(dialogCreateRoomConfirmed(QString)));
-
-    promptCreateRoomWindow->exec();
+    mode = "createRoom";
 }
 
 void editor::on_actionDeleteRoom_triggered()
@@ -107,6 +103,9 @@ void editor::sceneClicked()
             scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
             mode = "normal";
         }
+    }else if(mode == "createRoom"){
+        emit createRoomSig();
+        mode = "normal";
     }else{
         if(scene->itemAt(relativeOrigin, QTransform())){
             Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
@@ -131,7 +130,7 @@ void editor::removalCleanup(QString name)
 }
 
 
-void editor::dialogCreateRoomConfirmed(QString roomName)
+void editor::createRoom()
 {
 /*
     Function: When a user clicks the Create Room button, the slot for the
@@ -144,11 +143,22 @@ void editor::dialogCreateRoomConfirmed(QString roomName)
     Author: Uzair Shamim
 */
     qDebug() << "dialogCreateRoomConfirmed: new room recieved";
+    QPoint origin = ui->graphicsView->mapFromGlobal(QCursor::pos());
+    QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
+
     dataRoom = new Room();
-    rooms->insert(roomName, dataRoom);
-    dataRoom->setName(roomName);
+    rooms->insert("room_"+QString::number(roomCount), dataRoom);
+    dataRoom->setName("room_"+QString::number(roomCount));
     scene->addItem(dataRoom);
-    ui->roomListWidget->addItem(roomName);
+    dataRoom->setPos(relativeOrigin);
+//    qDebug() << "Relative Origin:" << relativeOrigin;
+//    qDebug() << scene->itemAt(0, 0, QTransform())->x() << scene->itemAt(0, 0, QTransform())->y();
+//    scene->itemAt(0, 0, QTransform())->setX(relativeOrigin.x());
+//    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
+//    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
+//             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
+    ui->roomListWidget->addItem("room_"+QString::number(roomCount));
+    roomCount++;
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
 }
 
