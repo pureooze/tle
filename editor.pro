@@ -34,3 +34,6 @@ FORMS    += \
     prompterAddExit.ui \
     prompterRemoveExit.ui \
     prompterCreateRoom.ui
+
+RESOURCES += \
+    img/icons.qrc

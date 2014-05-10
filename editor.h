@@ -24,13 +24,13 @@ public:
 
 private slots:
     void on_addExit_clicked();
-    void on_createRoom_clicked();
     void on_removeExit_clicked();
-    void on_deleteRoom_clicked();
     //void removeRoom();
     void addPortalsListView(QMap<QString, QString> portals);
-
     void on_roomListWidget_clicked(const QModelIndex &index);
+    void on_actionCreateRoom_triggered();
+
+    void on_actionDeleteRoom_triggered();
 
 private:
     Ui::editor *ui;

@@ -22,7 +22,6 @@ editor::editor(QWidget *parent) :
     connect(this, SIGNAL(displayPortals(QMap<QString,QString>)), this,\
             SLOT(addPortalsListView(QMap<QString,QString>)));
     rooms = new QMap<QString, Room *>;
-    ui->scrollArea->setEnabled(false);
 }
 
 editor::~editor()
@@ -30,7 +29,7 @@ editor::~editor()
     delete ui;
 }
 
-void editor::on_createRoom_clicked()
+void editor::on_actionCreateRoom_triggered()
 {
     qDebug() << "pressed";
     promptCreateRoomWindow = new prompterCreateRoom;
@@ -40,6 +39,11 @@ void editor::on_createRoom_clicked()
             SLOT(dialogCreateRoomConfirmed(QString)));
 
     promptCreateRoomWindow->exec();
+}
+
+void editor::on_actionDeleteRoom_triggered()
+{
+    mode = "deleteRoom";
 }
 
 void editor::on_addExit_clicked()
@@ -66,11 +70,6 @@ void editor::on_removeExit_clicked()
 
     emit setRoomMap(*rooms);
     promptRemoveExitWindow->exec();
-}
-
-void editor::on_deleteRoom_clicked()
-{
-    mode = "deleteRoom";
 }
 
 void editor::addPortalsListView(QMap<QString, QString> portals)
@@ -117,7 +116,6 @@ void editor::sceneClicked()
             emit displayPortals(room->getPortals());
         }else{
             selectedRoom = "";
-            ui->scrollArea->setEnabled(false);
         }
     }
 }
@@ -199,11 +197,8 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
     selectedRoom = ui->roomListWidget->item(in)->text();
     ui->scrollArea->setEnabled(true);
     ui->label->setText(selectedRoom);
-    Room *room = (Room *)rooms->value(selectedRoom);
-    emit displayPortals(room->getPortals());
+    emit displayPortals(rooms->value(selectedRoom)->getPortals());
 }
-
-
 
 
 /*
@@ -223,4 +218,16 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
 //    rooms->insert("Forest", dataRoom);
 //    guiRoom = new RoomGUI();
 //    scene->addItem(guiRoom);
+//}
+
+//void editor::on_actionCreateRoom_triggered()
+//{
+//    qDebug() << "pressed";
+//    promptCreateRoomWindow = new prompterCreateRoom;
+//    promptCreateRoomWindow->setModal(true);
+
+//    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this,\
+//            SLOT(dialogCreateRoomConfirmed(QString)));
+
+//    promptCreateRoomWindow->exec();
 //}
