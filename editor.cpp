@@ -143,7 +143,7 @@ void editor::createRoom()
     the Room class to create an object and then pass it's location to a
     QMap. Then pass the Room object to the QGraphicsScene to display.
 
-    Requires: QString
+    Requires: void
     Returns: void
     Author: Uzair Shamim
 */
