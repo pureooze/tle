@@ -101,7 +101,12 @@ void editor::sceneClicked()
             emit removeExits(room->name);
             rooms->remove(room->name);
             scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
-            mode = "normal";
+            for(int i; i <= ui->roomListWidget->count(); i++){
+                if(ui->roomListWidget->item(i)->text() == room->name){
+                    ui->roomListWidget->takeItem(i);
+                    break;
+                }
+            }
         }
     }else if(mode == "createRoom"){
         emit createRoomSig();
@@ -151,12 +156,6 @@ void editor::createRoom()
     dataRoom->setName("room_"+QString::number(roomCount));
     scene->addItem(dataRoom);
     dataRoom->setPos(relativeOrigin);
-//    qDebug() << "Relative Origin:" << relativeOrigin;
-//    qDebug() << scene->itemAt(0, 0, QTransform())->x() << scene->itemAt(0, 0, QTransform())->y();
-//    scene->itemAt(0, 0, QTransform())->setX(relativeOrigin.x());
-//    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
-//    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
-//             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
     ui->roomListWidget->addItem("room_"+QString::number(roomCount));
     roomCount++;
     qDebug() << "dialogCreateRoomConfirmed: room created, function end";
@@ -241,3 +240,10 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
 
 //    promptCreateRoomWindow->exec();
 //}
+
+//    qDebug() << "Relative Origin:" << relativeOrigin;
+//    qDebug() << scene->itemAt(0, 0, QTransform())->x() << scene->itemAt(0, 0, QTransform())->y();
+//    scene->itemAt(0, 0, QTransform())->setX(relativeOrigin.x());
+//    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
+//    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
+//             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
