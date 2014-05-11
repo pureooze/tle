@@ -4,7 +4,6 @@
 #include "room.h"
 #include "scene.h"
 #include "prompterAddExit.h"
-#include "prompterRemoveExit.h"
 #include <QMainWindow>
 #include <QMap>
 #include <QGraphicsScene>
@@ -42,9 +41,7 @@ private:
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
     QString selectedRoom = "";
-    prompterCreateRoom *promptCreateRoomWindow;
     prompterAddExit *promptAddExitWindow;
-    prompterRemoveExit *promptRemoveExitWindow;
     int roomCount = 0;
 
 protected:

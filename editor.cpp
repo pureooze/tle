@@ -68,16 +68,9 @@ void editor::on_addExit_clicked()
 
 void editor::on_removeExit_clicked()
 {
-    promptRemoveExitWindow = new prompterRemoveExit;
-    promptRemoveExitWindow->setModal(true);
-
-    connect(promptRemoveExitWindow, SIGNAL(removeExit(QString,QString)), this,\
-            SLOT(dialogRemoveExitConfirmed(QString,QString)));
-    connect(this, SIGNAL(setRoomMap(QMap<QString,Room*>)), promptRemoveExitWindow,\
-            SLOT(setMap(QMap<QString,Room*>)));
-
-    emit setRoomMap(*rooms);
-    promptRemoveExitWindow->exec();
+    QString name = ui->portalListWidget->currentItem()->text();
+    emit callExitRemoval(selectedRoom, name);
+    ui->portalListWidget->takeItem(ui->portalListWidget->currentRow());
 }
 
 void editor::addPortalsListView(QMap<QString, QString> portals)
@@ -155,6 +148,7 @@ void editor::removalCleanup(QString name)
 {
     qDebug() << "removalCleanup: name recieved";
     for(auto i: rooms->value(name)->getPortals()){
+        qDebug() << i;
         QString portal = rooms->value(name)->getPortals().key(i);
         emit callExitRemoval(i, portal);
     }
