@@ -16,7 +16,7 @@ prompterAddExit::~prompterAddExit()
 
 void prompterAddExit::setMap(QMap<QString, Room *> *map)
 {
-    for(auto i : map->keys()){
+    foreach(QString i, map->keys()){
         ui->addToComboBox->addItem(i);
         ui->targetComboBox->addItem(i);
     }

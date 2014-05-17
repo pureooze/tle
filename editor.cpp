@@ -76,7 +76,7 @@ void editor::on_removeExit_clicked()
 void editor::addPortalsListView(QMap<QString, QString> portals)
 {
     ui->portalListWidget->clear();
-    for(auto i: portals.keys()){
+    foreach(QString i, portals.keys()){
         ui->portalListWidget->addItem(i);
     }
 }
@@ -147,7 +147,7 @@ void editor::sceneClicked()
 void editor::removalCleanup(QString name)
 {
     qDebug() << "removalCleanup: name recieved";
-    for(auto i: rooms->value(name)->getPortals()){
+    foreach(QString i, rooms->value(name)->getPortals()){
         qDebug() << i;
         QString portal = rooms->value(name)->getPortals().key(i);
         emit callExitRemoval(i, portal);
