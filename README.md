@@ -5,7 +5,7 @@ simple-textgame-editor
 
 #### SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
 A level editor/engine that can be used to generate maps for text games.
-Copyright (C) 2014 Uzair Shamim
+Copyright (C) 2014 Uzair Shamim, dexgecko
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
