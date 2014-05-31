@@ -32,17 +32,32 @@ editor::editor(QWidget *parent) :
 
     scene = new Scene();
     ui->graphicsView->setScene(scene);
+
     connect(scene, SIGNAL(roomSelected()), this, SLOT(sceneClicked()));
+
     connect(this, SIGNAL(createRoomSig()), this, SLOT(createRoom()));
+
     connect(this, SIGNAL(changeListSelection(QString)), this,\
             SLOT(changeRoomListSelection(QString)));
+
     connect(this, SIGNAL(removeExits(QString)), this, SLOT(removalCleanup(QString)));
+
     connect(this, SIGNAL(callExitRemoval(QString,QString)), this, \
             SLOT(dialogRemoveExitConfirmed(QString,QString)));
-    connect(this, SIGNAL(displayPortals(QMap<QString,QString>)), this,\
-            SLOT(addPortalsListView(QMap<QString,QString>)));
+
+    connect(this, SIGNAL(displayAttributes(QString)), this,\
+            SLOT(addAttrListView(QString)));
+
     rooms = new QMap<QString, Room *>;
     ui->graphicsView->setSceneRect(0, 0, 5000, 5000);
+    ui->tableWidget->setColumnCount(2);
+    ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Attribute" << "Value");
+    ui->tableWidget->setRowCount(7);
+//    QTableWidgetItem *item = new QTableWidgetItem("ALIAS");
+//    QTableWidgetItem *item2 = new QTableWidgetItem("start_room");
+//    ui->tableWidget->setItem(0, 0, item);
+//    ui->tableWidget->setItem(0, 1, item2);
+    ui->tableWidget->resizeColumnsToContents();
 }
 
 editor::~editor()
@@ -85,17 +100,51 @@ void editor::on_addExit_clicked()
 
 void editor::on_removeExit_clicked()
 {
-    QString name = ui->portalListWidget->currentItem()->text();
-    emit callExitRemoval(selectedRoom, name);
-    ui->portalListWidget->takeItem(ui->portalListWidget->currentRow());
+//    QString name = ui->portalListWidget->currentItem()->text();
+//    emit callExitRemoval(selectedRoom, name);
+//    ui->portalListWidget->takeItem(ui->portalListWidget->currentRow());
 }
 
-void editor::addPortalsListView(QMap<QString, QString> portals)
+void editor::addAttrListView(QString name)
 {
-    ui->portalListWidget->clear();
-    foreach(QString i, portals.keys()){
-        ui->portalListWidget->addItem(i);
+    qDebug() << "addAttrListView started";
+    int attrLim = 5;
+    QStringList list;
+
+    QTableWidgetItem *r0c0 = new QTableWidgetItem("ALIAS");
+    QTableWidgetItem *r0c1 = new QTableWidgetItem(name);
+    QTableWidgetItem *r1c0 = new QTableWidgetItem("GATES");
+
+    for(int i = 0; i < rooms->value(name)->getPortals().keys().size(); ++i){
+        QString str(rooms->value(name)->getPortals().keys()[i].constData());
+        list << str;
+        qDebug() << list;
     }
+    QTableWidgetItem *r1c1 = new QTableWidgetItem(QString(list.join(", ")));
+
+    QTableWidgetItem *r2c0 = new QTableWidgetItem("TEXT_GLANCE");
+    QTableWidgetItem *r2c1 = new QTableWidgetItem(rooms->value(name)->getGlance());
+    QTableWidgetItem *r3c0 = new QTableWidgetItem("TEXT_EXAMINE");
+    QTableWidgetItem *r3c1 = new QTableWidgetItem(rooms->value(name)->getExamine());
+    QTableWidgetItem *r4c0 = new QTableWidgetItem("CONTAIN_ITEMS");
+    QTableWidgetItem *r4c1 = new QTableWidgetItem(rooms->value(name)->getItems().join(", "));
+    QTableWidgetItem *r5c0 = new QTableWidgetItem("CONTAIN_ACTORS");
+    QTableWidgetItem *r5c1 = new QTableWidgetItem(rooms->value(name)->getActors().join(", "));
+
+    ui->tableWidget->setItem(0, 0, r0c0);
+    ui->tableWidget->setItem(0, 1, r0c1);
+    ui->tableWidget->setItem(1, 0, r1c0);
+    ui->tableWidget->setItem(1, 1, r1c1);
+    ui->tableWidget->setItem(2, 0, r2c0);
+    ui->tableWidget->setItem(2, 1, r2c1);
+    ui->tableWidget->setItem(3, 0, r3c0);
+    ui->tableWidget->setItem(3, 1, r3c1);
+    ui->tableWidget->setItem(4, 0, r4c0);
+    ui->tableWidget->setItem(4, 1, r4c1);
+    ui->tableWidget->setItem(5, 0, r5c0);
+    ui->tableWidget->setItem(5, 1, r5c1);
+
+    qDebug() << "addAttrListView ends";
 }
 
 void editor::on_lineEdit_returnPressed()
@@ -130,18 +179,15 @@ void editor::sceneClicked()
     QPointF relativeOrigin = ui->graphicsView->mapToScene(origin);
 
     // Determine what should be done on mouse click, depending on the mode
-    if(mode == "deleteRoom"){
-        // Avoid segfault by making sure there is a room being clicked
-        if(scene->itemAt(relativeOrigin, QTransform())){
-            Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
-            emit removeExits(room->name);
-            rooms->remove(room->name);
-            scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
-            for(int i; i <= ui->roomListWidget->count(); i++){
-                if(ui->roomListWidget->item(i)->text() == room->name){
-                    ui->roomListWidget->takeItem(i);
-                    break;
-                }
+    if(mode == "deleteRoom" && scene->itemAt(relativeOrigin, QTransform())){
+        Room *room = (Room *)scene->itemAt(relativeOrigin, QTransform());
+        emit removeExits(room->name);
+        rooms->remove(room->name);
+        scene->removeItem(scene->itemAt(relativeOrigin, QTransform()));
+        for(int i; i <= ui->roomListWidget->count(); i++){
+            if(ui->roomListWidget->item(i)->text() == room->name){
+                ui->roomListWidget->takeItem(i);
+                break;
             }
         }
     }else if(mode == "createRoom"){
@@ -154,7 +200,7 @@ void editor::sceneClicked()
             ui->scrollArea->setEnabled(true);
             ui->lineEdit->setText(room->name);
             emit changeListSelection(room->name);
-            emit displayPortals(room->getPortals());
+            emit displayAttributes(room->name);
         }else{
             selectedRoom = "";
         }
@@ -244,8 +290,36 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
     selectedRoom = ui->roomListWidget->item(in)->text();
     ui->scrollArea->setEnabled(true);
     ui->lineEdit->setText(selectedRoom);
-    emit displayPortals(rooms->value(selectedRoom)->getPortals());
+    emit displayAttributes(selectedRoom);
 }
+
+
+void editor::on_tableWidget_cellClicked(int row, int column)
+{
+    ui->paramEditWidget->setText(ui->tableWidget->item(row, 1)->text());
+}
+
+
+void editor::on_paramEditWidget_textChanged()
+{
+    rooms->value(selectedRoom)->setGlance("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -287,3 +361,4 @@ void editor::on_roomListWidget_clicked(const QModelIndex &index)
 //    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
 //    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
 //             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
+

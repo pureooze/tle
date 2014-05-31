@@ -16,11 +16,21 @@ public:
     void removePortal(QString name);
     void displayPortals();
     void setName(QString name);
+    void setGlance(QString glanceContent);
 
     bool pressed;
     QMap<QString, QString> getPortals();
+    QString getGlance();
+    QString getExamine();
+    QStringList getItems();
+    QStringList getActors();
     QRectF boundingRect() const;
+
     QString name;
+    QString textGlance;
+    QString textExamine;
+    QStringList containItems;
+    QStringList containActors;
 
 private:
     QMap<QString,QString> portals;

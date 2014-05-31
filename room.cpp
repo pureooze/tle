@@ -7,6 +7,7 @@ Room::Room()
 {
     pressed = false;
     setFlag(ItemIsMovable);
+    this->textGlance = "";
 }
 
 void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -86,7 +87,34 @@ void Room::setName(QString name)
     this->name = name;
 }
 
+void Room::setGlance(QString glanceContent)
+{
+    this->textGlance = glanceContent;
+}
+
 QMap<QString, QString> Room::getPortals()
 {
     return portals;
+}
+
+QString Room::getGlance()
+{
+    return textGlance;
+}
+
+QString Room::getExamine()
+{
+    return textExamine;
+}
+
+QStringList Room::getItems()
+{
+    containItems << "beany_hat" << "tuxedo";
+    return containItems;
+}
+
+QStringList Room::getActors()
+{
+    containActors << "lucien_lachance" << "gecko";
+    return containActors;
 }

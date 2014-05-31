@@ -25,13 +25,17 @@ private slots:
     void on_addExit_clicked();
     void on_removeExit_clicked();
     //void removeRoom();
-    void addPortalsListView(QMap<QString, QString> portals);
+    void addAttrListView(QString name);
     void on_roomListWidget_clicked(const QModelIndex &index);
     void on_actionCreateRoom_triggered();
     void on_actionDeleteRoom_triggered();
     void changeRoomListSelection(QString name);
 
     void on_lineEdit_returnPressed();
+
+    void on_tableWidget_cellClicked(int row, int column);
+
+    void on_paramEditWidget_textChanged();
 
 private:
     Ui::editor *ui;
@@ -58,7 +62,7 @@ signals:
     void setRoomMap(QMap<QString,Room*>);
     void removeExits(QString);
     void callExitRemoval(QString, QString);
-    void displayPortals(QMap<QString, QString> );
+    void displayAttributes(QString);
     void changeListSelection(QString);
 };
 
