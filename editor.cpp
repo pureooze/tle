@@ -302,7 +302,8 @@ void editor::on_tableWidget_cellClicked(int row, int column)
 
 void editor::on_paramEditWidget_textChanged()
 {
-    rooms->value(selectedRoom)->setGlance("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    rooms->value(selectedRoom)->setGlance(ui->paramEditWidget->toPlainText());
+    ui->tableWidget->currentItem()->setText(rooms->value(selectedRoom)->getGlance());
 }
 
 
