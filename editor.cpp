@@ -20,6 +20,7 @@
 #include "room.h"
 #include "scene.h"
 #include "prompterAddExit.h"
+#include "addobjectdialog.h"
 #include <QDebug>
 #include <QList>
 
@@ -302,64 +303,36 @@ void editor::on_tableWidget_cellClicked(int row, int column)
 
 void editor::on_paramEditWidget_textChanged()
 {
-    rooms->value(selectedRoom)->setGlance(ui->paramEditWidget->toPlainText());
-    ui->tableWidget->currentItem()->setText(rooms->value(selectedRoom)->getGlance());
+    switch(ui->tableWidget->currentRow()){
+    case 2:
+        rooms->value(selectedRoom)->setGlance(ui->paramEditWidget->text());
+        ui->tableWidget->currentItem()->setText(rooms->value(selectedRoom)->getGlance());
+        break;
+    case 3:
+        rooms->value(selectedRoom)->setExamine(ui->paramEditWidget->text());
+        ui->tableWidget->currentItem()->setText(rooms->value(selectedRoom)->getExamine());
+        break;
+    case 4:
+        QStringList params = ui->paramEditWidget->text().split(",");
+        qDebug() << params;
+        ui->objectListWidget->addItem(rooms->value(selectedRoom)->getPortals()[0]);
+        break;
+//    default:
+//        break;
+    }
 }
 
+void editor::on_pushButton_pressed()
+{
+    // Add Object dialog
+    addObjectDialogWindow = new addObjectDialog;
+    addObjectDialogWindow->setModal(true);
+    connect(addObjectDialogWindow, SIGNAL(objCreation(QStringList)), this, SLOT(createObject(QStringList)));
+    addObjectDialogWindow->exec();
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- * BEWARE ALL WHO ENTER HERE
- *
- * THIS IS LAND OF THE DEADLY COMMENTED CODE
- *
- * THERE IS NO GUARANTEE THIS CODE WILL WORK
- * IN FACT IT PROBABLY WONT SO DONT TRY IT
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*/
-
-//void editor::dialogConfirmed()
-//{
-//    qDebug() << "pressed";
-//    dataRoom = new Room();
-//    rooms->insert("Forest", dataRoom);
-//    guiRoom = new RoomGUI();
-//    scene->addItem(guiRoom);
-//}
-
-//void editor::on_actionCreateRoom_triggered()
-//{
-//    qDebug() << "pressed";
-//    promptCreateRoomWindow = new prompterCreateRoom;
-//    promptCreateRoomWindow->setModal(true);
-
-//    connect(promptCreateRoomWindow, SIGNAL(createRoom(QString)), this,\
-//            SLOT(dialogCreateRoomConfirmed(QString)));
-
-//    promptCreateRoomWindow->exec();
-//}
-
-//    qDebug() << "Relative Origin:" << relativeOrigin;
-//    qDebug() << scene->itemAt(0, 0, QTransform())->x() << scene->itemAt(0, 0, QTransform())->y();
-//    scene->itemAt(0, 0, QTransform())->setX(relativeOrigin.x());
-//    scene->itemAt(relativeOrigin.x(), 0, QTransform())->setY(relativeOrigin.y());
-//    qDebug() << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->x()\
-//             << scene->itemAt(relativeOrigin.x(), relativeOrigin.y(), QTransform())->y();
-
+void editor::createObject(QStringList objParams)
+{
+    qDebug() << objParams;
+    object obj(objParams);
+}

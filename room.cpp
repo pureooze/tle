@@ -92,6 +92,11 @@ void Room::setGlance(QString glanceContent)
     this->textGlance = glanceContent;
 }
 
+void Room::setExamine(QString examineContent)
+{
+    this->textExamine = examineContent;
+}
+
 QMap<QString, QString> Room::getPortals()
 {
     return portals;

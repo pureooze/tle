@@ -17,19 +17,24 @@ SOURCES += \
     main.cpp \
     room.cpp \
     scene.cpp \
-    prompterAddExit.cpp
+    prompterAddExit.cpp \
+    events.cpp \
+    object.cpp \
+    addobjectdialog.cpp
 
 HEADERS  += \
     editor.h \
     room.h \
     scene.h \
-    prompterAddExit.h
+    prompterAddExit.h \
+    events.h \
+    object.h \
+    addobjectdialog.h
 
 FORMS    += \
     editor.ui \
     prompterAddExit.ui \
-    prompterRemoveExit.ui \
-    prompterCreateRoom.ui
+    addobjectdialog.ui
 
 RESOURCES += \
     img/icons.qrc

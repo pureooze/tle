@@ -17,6 +17,7 @@ public:
     void displayPortals();
     void setName(QString name);
     void setGlance(QString glanceContent);
+    void setExamine(QString examineContent);
 
     bool pressed;
     QMap<QString, QString> getPortals();
