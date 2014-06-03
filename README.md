@@ -1,7 +1,7 @@
 simple-textgame-editor
 ======================
 
-![alt tag](http://paste.opensuse.org/view/raw/93253484)
+![alt tag](https://ushamim.files.wordpress.com/2014/05/overview_1_1-01.png)
 
 #### SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
 A level editor/engine that can be used to generate maps for text games.
