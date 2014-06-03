@@ -1,4 +1,4 @@
-simple-textgame-editor
+textgame-level-editor
 ======================
 ### Blog (latest updates about development)
 [Click here to view the blog] [src]
