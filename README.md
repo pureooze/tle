@@ -3,7 +3,7 @@ simple-textgame-editor
 ### Blog (latest updates about development)
 [Click here to view the blog] [src]
 
-[src]: https://www.ushamim.wordpress.com
+[src]: https://ushamim.wordpress.com
 
 ### Mockups (visit blog for more)
 ![alt tag](https://ushamim.files.wordpress.com/2014/05/overview_1_1-01.png)
