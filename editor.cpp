@@ -322,7 +322,7 @@ void editor::on_paramEditWidget_textChanged()
     }
 }
 
-void editor::on_pushButton_pressed()
+void editor::on_addObject_pressed()
 {
     // Add Object dialog
     addObjectDialogWindow = new addObjectDialog;
@@ -334,5 +334,23 @@ void editor::on_pushButton_pressed()
 void editor::createObject(QStringList objParams)
 {
     qDebug() << objParams;
-    object obj(objParams);
+    obj = new object(objParams);
+    rooms->value(selectedRoom)->setObject(obj);
+//    qDebug() << rooms->value(selectedRoom)->objects.keys();
 }
+
+void editor::on_addEvent_pressed()
+{
+    addEventDialogWindow = new addEventDialog;
+    addEventDialogWindow->setModal(true);
+    connect(addEventDialogWindow, SIGNAL(eventCreation(QStringList)), this, SLOT(createEvent(QStringList)));
+    addEventDialogWindow->exec();
+}
+
+void editor::createEvent(QStringList eventParams)
+{
+    qDebug() << eventParams;
+}
+
+
+

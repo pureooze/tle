@@ -1,6 +1,7 @@
 #ifndef ROOM_H
 #define ROOM_H
 
+#include <object.h>
 #include <QMap>
 #include <QString>
 #include <QDebug>
@@ -18,9 +19,11 @@ public:
     void setName(QString name);
     void setGlance(QString glanceContent);
     void setExamine(QString examineContent);
+    void setObject(object *obj);
 
     bool pressed;
     QMap<QString, QString> getPortals();
+
     QString getGlance();
     QString getExamine();
     QStringList getItems();
@@ -32,6 +35,8 @@ public:
     QString textExamine;
     QStringList containItems;
     QStringList containActors;
+
+    QString test;
 
 private:
     QMap<QString,QString> portals;

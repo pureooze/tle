@@ -30,6 +30,11 @@ QRectF Room::boundingRect() const
     return QRectF(0, 0, 100, 100);
 }
 
+void Room::setObject(object *obj)
+{
+   this->name = obj->name;
+}
+
 void Room::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     pressed = true;

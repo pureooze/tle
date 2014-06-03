@@ -10,7 +10,7 @@ public:
     events();
     QMap<QString, QMap<QString, QString> > attributes;
 
-    void printData(QMap<QString, QString> obj);
+    void printData(QString name, QMap<QString, QString> obj);
 
 private:
 };

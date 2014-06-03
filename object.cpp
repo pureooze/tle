@@ -1,7 +1,7 @@
 #include "object.h"
-#include <QString>
+#include <QStringList>
 
 object::object(QStringList params)
 {
-    attributes.insert("name", params[0]);
+    this->name = "asdasd";
 }

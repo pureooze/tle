@@ -20,7 +20,8 @@ SOURCES += \
     prompterAddExit.cpp \
     events.cpp \
     object.cpp \
-    addobjectdialog.cpp
+    addobjectdialog.cpp \
+    addeventdialog.cpp
 
 HEADERS  += \
     editor.h \
@@ -29,12 +30,14 @@ HEADERS  += \
     prompterAddExit.h \
     events.h \
     object.h \
-    addobjectdialog.h
+    addobjectdialog.h \
+    addeventdialog.h
 
 FORMS    += \
     editor.ui \
     prompterAddExit.ui \
-    addobjectdialog.ui
+    addobjectdialog.ui \
+    addeventdialog.ui
 
 RESOURCES += \
     img/icons.qrc

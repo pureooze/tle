@@ -7,10 +7,12 @@
 #include "object.h"
 #include "prompterAddExit.h"
 #include "addobjectdialog.h"
+#include "addeventdialog.h"
 
 #include <QMainWindow>
 #include <QMap>
 #include <QGraphicsScene>
+#include <QString>
 
 namespace Ui {
 class editor;
@@ -41,20 +43,22 @@ private slots:
 
     void on_paramEditWidget_textChanged();
 
-    void on_pushButton_pressed();
+    void on_addObject_pressed();
+
+    void on_addEvent_pressed();
 
 private:
     Ui::editor *ui;
     Scene *scene;
-//    RoomGUI *guiRoom;
     Room *dataRoom;
+    object *obj;
     QMap<QString, Room *> *rooms;
     QString mode = "normal";
     QString selectedRoom = "";
     prompterAddExit *promptAddExitWindow;
     addObjectDialog *addObjectDialogWindow;
+    addEventDialog *addEventDialogWindow;
     int roomCount = 0;
-    events event;
 
 protected:
     //void paintEvent(QPaintEvent *e);
@@ -65,6 +69,7 @@ public slots:
     void dialogRemoveExitConfirmed(QString roomName, QString portalName);
     void removalCleanup(QString name);
     void createObject(QStringList objParams);
+    void createEvent(QStringList eventParams);
 
 signals:
     void createRoomSig();

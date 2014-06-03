@@ -25,7 +25,6 @@ private slots:
 
 private:
     Ui::prompterAddExit *ui;
-    QMap<QString, Room *> *map;
 
 signals:
     void addExit(QString, QString, QString);

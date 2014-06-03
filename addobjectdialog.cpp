@@ -17,6 +17,6 @@ addObjectDialog::~addObjectDialog()
 void addObjectDialog::on_buttonBox_accepted()
 {
     QStringList atr;
-    atr << ui->nameEdit->text();
+    atr << ui->nameEdit->text() << ui->glanceEdit->toPlainText() << ui->examineEdit->toPlainText() << "True" << "False";
     emit objCreation(atr);
 }

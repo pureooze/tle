@@ -5,8 +5,8 @@ events::events()
 {
 }
 
-void events::printData(QMap<QString, QString> obj)
+void events::printData(QString name, QMap<QString, QString> obj)
 {
-    attributes.insert("abc", obj);
+    attributes.insert(name, obj);
     qDebug() << attributes;
 }
