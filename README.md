@@ -1,7 +1,11 @@
 simple-textgame-editor
 ======================
+### Blog (latest updates about development)
+[Click here to view the blog] [src]
 
-### Mockup
+[src]: https://www.ushamim.wordpress.com
+
+### Mockups (visit blog for more)
 ![alt tag](https://ushamim.files.wordpress.com/2014/05/overview_1_1-01.png)
 
 ### SEE LICENSE FILE FOR DETAILS ABOUT THE LICENSE
