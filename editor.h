@@ -6,8 +6,6 @@
 #include "events.h"
 #include "object.h"
 #include "prompterAddExit.h"
-#include "addobjectdialog.h"
-#include "addeventdialog.h"
 
 #include <QMainWindow>
 #include <QMap>
@@ -53,12 +51,17 @@ private:
     Room *dataRoom;
     object *obj;
     QMap<QString, Room *> *rooms;
+    QMap<QString, object *> *objects;
     QString mode = "normal";
     QString selectedRoom = "";
+    QString selectedObj = "";
     prompterAddExit *promptAddExitWindow;
-    addObjectDialog *addObjectDialogWindow;
-    addEventDialog *addEventDialogWindow;
     int roomCount = 0;
+    int objCount = 0;
+
+    void createTableRoom(QString name);
+    void createTableItem(QString name);
+    QString boolEval(bool value);
 
 protected:
     //void paintEvent(QPaintEvent *e);

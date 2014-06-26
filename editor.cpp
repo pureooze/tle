@@ -1,5 +1,5 @@
 // A level editor/engine that can be used to generate maps for text games.
-// Copyright (C) 2014 Uzair Shamim, dexgecko
+// Copyright (C) 2014 Uzair Shamim, Paul Donchenko
 
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -20,7 +20,6 @@
 #include "room.h"
 #include "scene.h"
 #include "prompterAddExit.h"
-#include "addobjectdialog.h"
 #include <QDebug>
 #include <QList>
 
@@ -50,10 +49,16 @@ editor::editor(QWidget *parent) :
             SLOT(addAttrListView(QString)));
 
     rooms = new QMap<QString, Room *>;
+    objects = new QMap<QString, object *>;
     ui->graphicsView->setSceneRect(0, 0, 5000, 5000);
     ui->tableWidget->setColumnCount(2);
     ui->tableWidget->setHorizontalHeaderLabels(QStringList() << "Attribute" << "Value");
     ui->tableWidget->setRowCount(7);
+
+    ui->itemTableWidget->setColumnCount(2);
+    ui->itemTableWidget->setHorizontalHeaderLabels(QStringList() << "Attribute" << "Value");
+    ui->itemTableWidget->setRowCount(9);
+
 //    QTableWidgetItem *item = new QTableWidgetItem("ALIAS");
 //    QTableWidgetItem *item2 = new QTableWidgetItem("start_room");
 //    ui->tableWidget->setItem(0, 0, item);
@@ -64,6 +69,44 @@ editor::editor(QWidget *parent) :
 editor::~editor()
 {
     delete ui;
+}
+
+void editor::createTableRoom(QString name)
+{
+    int attrLim = 5;
+    QStringList list;
+    QTableWidgetItem *r0c0 = new QTableWidgetItem("ALIAS");
+    QTableWidgetItem *r0c1 = new QTableWidgetItem(name);
+    QTableWidgetItem *r1c0 = new QTableWidgetItem("GATES");
+
+    for(int i = 0; i < rooms->value(name)->getPortals().keys().size(); ++i){
+        QString str(rooms->value(name)->getPortals().keys()[i].constData());
+        list << str;
+        qDebug() << list;
+    }
+    QTableWidgetItem *r1c1 = new QTableWidgetItem(QString(list.join(", ")));
+
+    QTableWidgetItem *r2c0 = new QTableWidgetItem("TEXT_GLANCE");
+    QTableWidgetItem *r2c1 = new QTableWidgetItem(rooms->value(name)->getGlance());
+    QTableWidgetItem *r3c0 = new QTableWidgetItem("TEXT_EXAMINE");
+    QTableWidgetItem *r3c1 = new QTableWidgetItem(rooms->value(name)->getExamine());
+    QTableWidgetItem *r4c0 = new QTableWidgetItem("CONTAIN_ITEMS");
+    QTableWidgetItem *r4c1 = new QTableWidgetItem(rooms->value(name)->getItems().join(", "));
+    QTableWidgetItem *r5c0 = new QTableWidgetItem("CONTAIN_ACTORS");
+    QTableWidgetItem *r5c1 = new QTableWidgetItem(rooms->value(name)->getActors().join(", "));
+
+    ui->tableWidget->setItem(0, 0, r0c0);
+    ui->tableWidget->setItem(0, 1, r0c1);
+    ui->tableWidget->setItem(1, 0, r1c0);
+    ui->tableWidget->setItem(1, 1, r1c1);
+    ui->tableWidget->setItem(2, 0, r2c0);
+    ui->tableWidget->setItem(2, 1, r2c1);
+    ui->tableWidget->setItem(3, 0, r3c0);
+    ui->tableWidget->setItem(3, 1, r3c1);
+    ui->tableWidget->setItem(4, 0, r4c0);
+    ui->tableWidget->setItem(4, 1, r4c1);
+    ui->tableWidget->setItem(5, 0, r5c0);
+    ui->tableWidget->setItem(5, 1, r5c1);
 }
 
 void editor::on_actionCreateRoom_triggered()
@@ -109,42 +152,7 @@ void editor::on_removeExit_clicked()
 void editor::addAttrListView(QString name)
 {
     qDebug() << "addAttrListView started";
-    int attrLim = 5;
-    QStringList list;
-
-    QTableWidgetItem *r0c0 = new QTableWidgetItem("ALIAS");
-    QTableWidgetItem *r0c1 = new QTableWidgetItem(name);
-    QTableWidgetItem *r1c0 = new QTableWidgetItem("GATES");
-
-    for(int i = 0; i < rooms->value(name)->getPortals().keys().size(); ++i){
-        QString str(rooms->value(name)->getPortals().keys()[i].constData());
-        list << str;
-        qDebug() << list;
-    }
-    QTableWidgetItem *r1c1 = new QTableWidgetItem(QString(list.join(", ")));
-
-    QTableWidgetItem *r2c0 = new QTableWidgetItem("TEXT_GLANCE");
-    QTableWidgetItem *r2c1 = new QTableWidgetItem(rooms->value(name)->getGlance());
-    QTableWidgetItem *r3c0 = new QTableWidgetItem("TEXT_EXAMINE");
-    QTableWidgetItem *r3c1 = new QTableWidgetItem(rooms->value(name)->getExamine());
-    QTableWidgetItem *r4c0 = new QTableWidgetItem("CONTAIN_ITEMS");
-    QTableWidgetItem *r4c1 = new QTableWidgetItem(rooms->value(name)->getItems().join(", "));
-    QTableWidgetItem *r5c0 = new QTableWidgetItem("CONTAIN_ACTORS");
-    QTableWidgetItem *r5c1 = new QTableWidgetItem(rooms->value(name)->getActors().join(", "));
-
-    ui->tableWidget->setItem(0, 0, r0c0);
-    ui->tableWidget->setItem(0, 1, r0c1);
-    ui->tableWidget->setItem(1, 0, r1c0);
-    ui->tableWidget->setItem(1, 1, r1c1);
-    ui->tableWidget->setItem(2, 0, r2c0);
-    ui->tableWidget->setItem(2, 1, r2c1);
-    ui->tableWidget->setItem(3, 0, r3c0);
-    ui->tableWidget->setItem(3, 1, r3c1);
-    ui->tableWidget->setItem(4, 0, r4c0);
-    ui->tableWidget->setItem(4, 1, r4c1);
-    ui->tableWidget->setItem(5, 0, r5c0);
-    ui->tableWidget->setItem(5, 1, r5c1);
-
+    createTableRoom(name);
     qDebug() << "addAttrListView ends";
 }
 
@@ -324,11 +332,78 @@ void editor::on_paramEditWidget_textChanged()
 
 void editor::on_addObject_pressed()
 {
-    // Add Object dialog
-    addObjectDialogWindow = new addObjectDialog;
-    addObjectDialogWindow->setModal(true);
-    connect(addObjectDialogWindow, SIGNAL(objCreation(QStringList)), this, SLOT(createObject(QStringList)));
-    addObjectDialogWindow->exec();
+    QStringList list;
+    QString name = "obj_"+QString::number(objCount);
+    list << name;
+    obj = new object(list);
+    selectedObj = name;
+    QListWidgetItem *newObj = new QListWidgetItem(name);
+    ui->itemsListWidget->addItem(newObj);
+    ui->itemsListWidget->setCurrentItem(newObj);
+    obj->allowDrop = true;
+    objects->insert(name, obj);
+    createTableItem(name);
+    objCount++;
+}
+
+QString editor::boolEval(bool value)
+{
+    if(value == false){
+        return "False";
+    }else{
+        return "True";
+    }
+}
+
+void editor::createTableItem(QString name)
+{
+    int attrLim = 5;
+    QStringList list;
+    QTableWidgetItem *r0c0 = new QTableWidgetItem("ALIAS");
+    QTableWidgetItem *r0c1 = new QTableWidgetItem(name);
+    QTableWidgetItem *r1c0 = new QTableWidgetItem("TRIGGERS");
+
+//    for(int i = 0; i < objects->value(name)->getPortals().keys().size(); ++i){
+//        QString str(objects->value(name)->getPortals().keys()[i].constData());
+//        list << str;
+//        qDebug() << list;
+//    }
+//    QTableWidgetItem *r1c1 = new QTableWidgetItem(QString(list.join(", ")));
+    QTableWidgetItem *r1c1 = new QTableWidgetItem("asdsadasdsadsadsd");
+
+    QTableWidgetItem *r2c0 = new QTableWidgetItem("TEXT_GLANCE");
+    QTableWidgetItem *r2c1 = new QTableWidgetItem(objects->value(name)->textGlance);
+    QTableWidgetItem *r3c0 = new QTableWidgetItem("TEXT_EXAMINE");
+    QTableWidgetItem *r3c1 = new QTableWidgetItem(objects->value(name)->textExamine);
+    QTableWidgetItem *r4c0 = new QTableWidgetItem("ALLOW_TAKE");
+    QTableWidgetItem *r4c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowTake));
+    QTableWidgetItem *r5c0 = new QTableWidgetItem("ALLOW_DROP");
+    QTableWidgetItem *r5c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowDrop));
+    QTableWidgetItem *r6c0 = new QTableWidgetItem("ALLOW_USE");
+    QTableWidgetItem *r6c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowUse));
+    QTableWidgetItem *r7c0 = new QTableWidgetItem("ERROR_USE");
+    QTableWidgetItem *r7c1 = new QTableWidgetItem("The pouch is meant to be used");
+    QTableWidgetItem *r8c0 = new QTableWidgetItem("EVENTS_TAKE");
+    QTableWidgetItem *r8c1 = new QTableWidgetItem("start_ptaken");
+
+    ui->itemTableWidget->setItem(0, 0, r0c0);
+    ui->itemTableWidget->setItem(0, 1, r0c1);
+    ui->itemTableWidget->setItem(1, 0, r1c0);
+    ui->itemTableWidget->setItem(1, 1, r1c1);
+    ui->itemTableWidget->setItem(2, 0, r2c0);
+    ui->itemTableWidget->setItem(2, 1, r2c1);
+    ui->itemTableWidget->setItem(3, 0, r3c0);
+    ui->itemTableWidget->setItem(3, 1, r3c1);
+    ui->itemTableWidget->setItem(4, 0, r4c0);
+    ui->itemTableWidget->setItem(4, 1, r4c1);
+    ui->itemTableWidget->setItem(5, 0, r5c0);
+    ui->itemTableWidget->setItem(5, 1, r5c1);
+    ui->itemTableWidget->setItem(6, 0, r6c0);
+    ui->itemTableWidget->setItem(6, 1, r6c1);
+    ui->itemTableWidget->setItem(7, 0, r7c0);
+    ui->itemTableWidget->setItem(7, 1, r7c1);
+    ui->itemTableWidget->setItem(8, 0, r8c0);
+    ui->itemTableWidget->setItem(8, 1, r8c1);
 }
 
 void editor::createObject(QStringList objParams)
@@ -341,10 +416,6 @@ void editor::createObject(QStringList objParams)
 
 void editor::on_addEvent_pressed()
 {
-    addEventDialogWindow = new addEventDialog;
-    addEventDialogWindow->setModal(true);
-    connect(addEventDialogWindow, SIGNAL(eventCreation(QStringList)), this, SLOT(createEvent(QStringList)));
-    addEventDialogWindow->exec();
 }
 
 void editor::createEvent(QStringList eventParams)

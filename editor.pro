@@ -19,9 +19,7 @@ SOURCES += \
     scene.cpp \
     prompterAddExit.cpp \
     events.cpp \
-    object.cpp \
-    addobjectdialog.cpp \
-    addeventdialog.cpp
+    object.cpp
 
 HEADERS  += \
     editor.h \
@@ -29,9 +27,7 @@ HEADERS  += \
     scene.h \
     prompterAddExit.h \
     events.h \
-    object.h \
-    addobjectdialog.h \
-    addeventdialog.h
+    object.h
 
 FORMS    += \
     editor.ui \
