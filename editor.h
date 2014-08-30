@@ -11,6 +11,7 @@
 #include <QMap>
 #include <QGraphicsScene>
 #include <QString>
+#include <QComboBox>
 
 namespace Ui {
 class editor;

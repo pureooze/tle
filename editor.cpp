@@ -376,15 +376,26 @@ void editor::createTableItem(QString name)
     QTableWidgetItem *r3c0 = new QTableWidgetItem("TEXT_EXAMINE");
     QTableWidgetItem *r3c1 = new QTableWidgetItem(objects->value(name)->textExamine);
     QTableWidgetItem *r4c0 = new QTableWidgetItem("ALLOW_TAKE");
-    QTableWidgetItem *r4c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowTake));
+//    QTableWidgetItem *r4c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowTake));
     QTableWidgetItem *r5c0 = new QTableWidgetItem("ALLOW_DROP");
-    QTableWidgetItem *r5c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowDrop));
+//    QTableWidgetItem *r5c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowDrop));
     QTableWidgetItem *r6c0 = new QTableWidgetItem("ALLOW_USE");
-    QTableWidgetItem *r6c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowUse));
+//    QTableWidgetItem *r6c1 = new QTableWidgetItem(boolEval(objects->value(name)->allowUse));
     QTableWidgetItem *r7c0 = new QTableWidgetItem("ERROR_USE");
     QTableWidgetItem *r7c1 = new QTableWidgetItem("The pouch is meant to be used");
     QTableWidgetItem *r8c0 = new QTableWidgetItem("EVENTS_TAKE");
     QTableWidgetItem *r8c1 = new QTableWidgetItem("start_ptaken");
+
+    QComboBox *takeCombo = new QComboBox();
+    QComboBox *useCombo = new QComboBox();
+    QComboBox *examineCombo = new QComboBox();
+
+    takeCombo->addItem("True");
+    takeCombo->addItem("False");
+    useCombo->addItem("True");
+    useCombo->addItem("False");
+    examineCombo->addItem("True");
+    examineCombo->addItem("False");
 
     ui->itemTableWidget->setItem(0, 0, r0c0);
     ui->itemTableWidget->setItem(0, 1, r0c1);
@@ -395,11 +406,11 @@ void editor::createTableItem(QString name)
     ui->itemTableWidget->setItem(3, 0, r3c0);
     ui->itemTableWidget->setItem(3, 1, r3c1);
     ui->itemTableWidget->setItem(4, 0, r4c0);
-    ui->itemTableWidget->setItem(4, 1, r4c1);
+    ui->itemTableWidget->setCellWidget(4, 1, takeCombo);
     ui->itemTableWidget->setItem(5, 0, r5c0);
-    ui->itemTableWidget->setItem(5, 1, r5c1);
+    ui->itemTableWidget->setCellWidget(5, 1, useCombo);
     ui->itemTableWidget->setItem(6, 0, r6c0);
-    ui->itemTableWidget->setItem(6, 1, r6c1);
+    ui->itemTableWidget->setCellWidget(6, 1, examineCombo);
     ui->itemTableWidget->setItem(7, 0, r7c0);
     ui->itemTableWidget->setItem(7, 1, r7c1);
     ui->itemTableWidget->setItem(8, 0, r8c0);
